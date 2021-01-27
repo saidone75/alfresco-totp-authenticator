@@ -1,0 +1,5 @@
+<webscript>
+    <shortname>TOTP Settings</shortname>
+    <description>TOTP Settings</description>
+    <url>/components/profile/totp-settings</url>
+</webscript>

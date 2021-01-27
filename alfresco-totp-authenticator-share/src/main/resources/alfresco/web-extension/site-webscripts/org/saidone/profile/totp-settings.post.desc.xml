@@ -1,0 +1,7 @@
+<webscript>
+    <shortname>TOTP Settings POST</shortname>
+    <description>TOTP Settings POST form submission processing</description>
+    <format default="html" />
+    <url>/components/profile/totp-settings</url>
+    <authentication>user</authentication>
+</webscript>
