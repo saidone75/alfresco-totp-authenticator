@@ -13,7 +13,7 @@ Get the sources:
 ```console
 $ git clone https://github.com/saidone75/alfresco-totp-authenticator.git
 ```
-build the amp:
+build the AMPs:
 ```console
 $ cd alfresco-totp-authenticator
 $ mvn package
