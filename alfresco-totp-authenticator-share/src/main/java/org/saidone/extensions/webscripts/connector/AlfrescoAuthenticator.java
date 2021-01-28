@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.saidone.web.site.SlingshotUserFactory;
 import org.springframework.extensions.config.RemoteConfigElement;
 import org.springframework.extensions.config.RemoteConfigElement.EndpointDescriptor;
 import org.springframework.extensions.surf.exception.AuthenticationException;
@@ -87,8 +88,8 @@ public class AlfrescoAuthenticator extends org.springframework.extensions.webscr
             if (logger.isDebugEnabled())
                 logger.debug("Authenticating user: " + user);
 
-            // retrieve token in any
-            token = (String)credentials.getProperty("token");
+            // retrieve token if any
+            token = (String)credentials.getProperty(SlingshotUserFactory.CREDENTIAL_TOKEN);
 
             // POST to the Alfresco login WebScript
             remoteClient.setRequestContentType(MIMETYPE_APPLICATION_JSON);

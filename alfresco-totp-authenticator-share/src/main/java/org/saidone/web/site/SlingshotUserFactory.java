@@ -78,6 +78,8 @@ public class SlingshotUserFactory extends org.alfresco.web.site.SlingshotUserFac
     
     public static final String ACTIVITI_ADMIN_ENDPOINT_ID = "activiti-admin";
 
+    public static final String CREDENTIAL_TOKEN = "token";
+
     private static Log logger = LogFactory.getLog(AlfrescoUserFactory.class);
 
 
@@ -94,7 +96,7 @@ public class SlingshotUserFactory extends org.alfresco.web.site.SlingshotUserFac
             Credentials credentials = vault.newCredentials(ALFRESCO_ENDPOINT_ID);
             credentials.setProperty(Credentials.CREDENTIAL_USERNAME, username);
             credentials.setProperty(Credentials.CREDENTIAL_PASSWORD, password);
-            credentials.setProperty("token", token);
+            credentials.setProperty(CREDENTIAL_TOKEN, token);
 
             // build a connector whose connector session is bound to the current session
             Connector connector = frameworkUtils.getConnector(request.getSession(), username, ALFRESCO_ENDPOINT_ID);
