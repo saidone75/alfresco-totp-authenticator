@@ -65,6 +65,7 @@
   			<groupId>javax.xml.bind</groupId>
   			<artifactId>jaxb-api</artifactId>
   			<version>2.3.0</version>
+            <scope>provided</scope>
 		</dependency> 
 
         <!-- The main Alfresco Repo dependency for compiling Java code in src/main/java -->
@@ -78,6 +79,7 @@
             <groupId>org.alfresco</groupId>
             <artifactId>share-po</artifactId>
             <version>5.0.d</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Bring in Alfresco RAD so we get access to AlfrescoTestRunner classes -->
@@ -91,6 +93,7 @@
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-repository</artifactId>
             <version>7.134.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

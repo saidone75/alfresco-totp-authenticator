@@ -47,6 +47,7 @@
             <groupId>org.alfresco</groupId>
             <artifactId>share-po</artifactId>
             <version>5.0.d</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
