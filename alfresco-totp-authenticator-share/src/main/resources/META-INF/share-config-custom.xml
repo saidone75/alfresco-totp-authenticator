@@ -24,4 +24,19 @@
    </remote>
    </config>
 
+   <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
+      <filter>
+         <rule>
+            <request>
+               <method>POST</method>
+               <path>/service/components/profile/totp-settings</path>
+            </request>
+            <action name="generateToken">
+               <param name="session">{token}</param>
+               <param name="cookie">{token}</param>
+            </action>
+         </rule>
+      </filter>
+   </config>
+
 </alfresco-config>

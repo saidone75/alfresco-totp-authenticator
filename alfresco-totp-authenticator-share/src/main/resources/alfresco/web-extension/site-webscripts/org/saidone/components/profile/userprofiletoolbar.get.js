@@ -62,6 +62,7 @@ function main()
          // Add Change Password link
          addLink("change-password-link", "change-password", "link.changepassword");
 
+         // Add TOTP Settings link
          addLink("totp-settings-link", "totp-settings", "link.totp-settings");
       }
 
