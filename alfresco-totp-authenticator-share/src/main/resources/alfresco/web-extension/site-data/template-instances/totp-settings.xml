@@ -15,7 +15,7 @@
             <url>/components/profile/userprofile-toolbar</url>
         </component>
 
-        <!-- Change Password -->
+        <!-- TOTP settings -->
         <component>
             <region-id>totp-settings</region-id>
             <url>/components/profile/totp-settings</url>
