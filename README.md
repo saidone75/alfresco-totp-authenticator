@@ -3,7 +3,7 @@ Time-based One-Time Password two factor authentication for Alfresco
 
 [![CircleCI](https://circleci.com/gh/saidone75/alfresco-totp-authenticator.svg?style=svg)](https://circleci.com/gh/saidone75/alfresco-totp-authenticator)
 
-[![alfresco-totp.png](https://i.postimg.cc/RVfVSBVj/alfresco-totp.png)](https://postimg.cc/Ln9MDGPT)
+[![Alfresco TOTP authenticator](alfresco-totp-authenticator-high.gif)](https://vimeo.com/507443676)]
 
 Distributed for free without any warranty. Use at your own risk.
 
@@ -58,7 +58,8 @@ and restart Alfresco.
 - Go to your profile page and click on *TOTP settings* tab
 - Click on *Activate TOTP* button to generate a secret and activate TOTP authentication
 - Import the secret on your favourite OTP application, personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
-alfresco-totp-authenticator
+
+Short explanation video [here](https://vimeo.com/507443676).
 
 ### Pre-built AMPs
 Coming soon!
