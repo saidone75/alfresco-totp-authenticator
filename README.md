@@ -59,7 +59,7 @@ and restart Alfresco.
 - Click on *Activate TOTP* button to generate a secret and activate TOTP authentication
 - Import the secret on your favourite OTP application, personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
 
-Short explanation video [here](https://vimeo.com/507443676).
+Take a look at a short explanation video [here](https://vimeo.com/507443676).
 
 ### Pre-built AMPs
 Coming soon!
