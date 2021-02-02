@@ -53,6 +53,12 @@ $ java -jar alfresco-mmt.jar install ./alfresco-totp-authenticator-platform/targ
 $ java -jar alfresco-mmt.jar install ./alfresco-totp-authenticator-share/target/alfresco-totp-authenticator-share-1.0-SNAPSHOT.amp share.war
 ```
 and restart Alfresco.
+### Configuration
+- Log into Alfresco
+- Go to your profile page and click on *TOTP settings* tab
+- Click on *Activate TOTP* button to generate a secret and activate TOTP authentication
+- Import the secret on your favourite OTP application, personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
+alfresco-totp-authenticator
 
 ### Pre-built AMPs
 Coming soon!
