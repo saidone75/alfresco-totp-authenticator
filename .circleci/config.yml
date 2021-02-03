@@ -32,6 +32,10 @@ jobs:
           paths:
             - ~/.m2
           key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+      - store_artifacts:
+          path: /home/circleci/project/alfresco-totp-authenticator-platform/target/alfresco-totp-authenticator-platform-1.0-SNAPSHOT.amp
+      - store_artifacts:
+          path: /home/circleci/project/alfresco-totp-authenticator-share/target/alfresco-totp-authenticator-share-1.0-SNAPSHOT.amp
 
 workflows:
   # Below is the definition of your workflow.
