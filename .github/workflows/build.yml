@@ -25,7 +25,6 @@ jobs:
         run: mvn -B -DskipTests clean package
 
       - name: Deploy to GitHub packages
-      # Have to skip doc and sources because GH Packages doesn't support classifiers
-      run: mvn -B deploy -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+        run: mvn -B deploy -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
         env:
           GITHUB_TOKEN: ${{ github.token }}
