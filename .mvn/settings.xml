@@ -13,7 +13,7 @@
             <repositories>
                 <repository>
                     <id>github</id>
-                    <name>GitHub saidone75 Apache Maven Packages</name>
+                    <name>GitHub saidone75</name>
                     <url>https://maven.pkg.github.com/saidone75/alfresco-totp-authenticator</url>
                 </repository>
             </repositories>
