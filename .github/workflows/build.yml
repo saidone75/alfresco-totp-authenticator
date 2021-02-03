@@ -24,9 +24,8 @@ jobs:
       - name: Build with Maven
         run: mvn -B -DskipTests clean package
 
-      - name: Collect artifacts
-        uses: actions/upload-artifact@v2
-        run: mkdir staging && cp */target/*.amp staging
-        with:
-          name: alfresco-totp-authenticator
-          path: staging
+      - name: Deploy to GitHub packages
+      # Have to skip doc and sources because GH Packages doesn't support classifiers
+      run: mvn -B deploy -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
