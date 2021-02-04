@@ -15,4 +15,11 @@
 		<module>alfresco-totp-authenticator-platform</module>
 		<module>alfresco-totp-authenticator-share</module>
 	</modules>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub saidone75</name>
+			<url>https://maven.pkg.github.com/saidone75/alfresco-totp-authenticator</url>
+		</repository>
+	</distributionManagement>
 </project>
