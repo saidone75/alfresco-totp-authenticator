@@ -29,8 +29,3 @@ jobs:
         with:
           name: alfresco-totp-authenticator.zip
           path: alfresco-totp-authenticator-*/target/*.amp
-
-      - name: Deploy to GitHub packages
-        run: mvn -B deploy -Dmaven.javadoc.skip=true -Dmaven.source.skip=true
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
