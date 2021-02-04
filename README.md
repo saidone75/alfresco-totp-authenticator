@@ -1,7 +1,7 @@
 # Alfresco TOTP authenticator
 Time-based One-Time Password two factor authentication for Alfresco
 
-[![CircleCI](https://circleci.com/gh/saidone75/alfresco-totp-authenticator.svg?style=svg)](https://circleci.com/gh/saidone75/alfresco-totp-authenticator)
+![Java CI](https://github.com/saidone75/alfresco-totp-authenticator/workflows/Java%20CI/badge.svg)
 
 [![Alfresco TOTP authenticator](alfresco-totp-authenticator-high.gif)](https://vimeo.com/507443676)
 
