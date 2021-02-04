@@ -27,5 +27,11 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
         with:
-          name: alfresco-totp-authenticator.zip
-          path: alfresco-totp-authenticator-*/target/*.amp
+          name: alfresco-totp-authenticator-platform.amp
+          path: alfresco-totp-authenticator-platform/target/alfresco-totp-authenticator-platform.amp
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: alfresco-totp-authenticator-share.amp
+          path: alfresco-totp-authenticator-share/target/alfresco-totp-authenticator-share.amp
