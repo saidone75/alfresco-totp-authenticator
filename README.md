@@ -1,6 +1,7 @@
 # Alfresco TOTP authenticator
 Time-based One-Time Password two factor authentication for Alfresco
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ![Java CI](https://github.com/saidone75/alfresco-totp-authenticator/workflows/Java%20CI/badge.svg)
 
 [![Alfresco TOTP authenticator](alfresco-totp-authenticator-high.gif)](https://vimeo.com/507443676)
@@ -59,7 +60,7 @@ and restart Alfresco.
 - Click on *Activate TOTP* button to generate a secret and activate TOTP authentication
 - Import the secret on your favourite OTP application, personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
 
-Take a look at a short explanation video [here](https://vimeo.com/507443676).
+Take a look at this short explanation video [here](https://vimeo.com/507443676).
 
 ### Pre-built AMPs
-On [Actions](https://github.com/saidone75/alfresco-totp-authenticator/actions) just click on a successfully completed Java CI workflow run, on the bottom of the page there will be the produced artifact. Stable [releases](https://github.com/saidone75/alfresco-totp-authenticator/releases) will include the related build.
+On [Actions](https://github.com/saidone75/alfresco-totp-authenticator/actions) just click on a successfully completed Java CI workflow run, on the bottom of the page there will be the produced artifacts. Stable [releases](https://github.com/saidone75/alfresco-totp-authenticator/releases) will include the related build.
