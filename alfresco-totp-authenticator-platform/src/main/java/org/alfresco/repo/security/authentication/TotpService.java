@@ -67,13 +67,12 @@ public class TotpService {
 
     public String generateSecret() {
         SecretGenerator secretGenerator = new DefaultSecretGenerator();
-        String secret = secretGenerator.generate();
-        return secret;
+        return secretGenerator.generate();
     }
 
     public void setSecret(String user, String secret) {
         NodeRef userNodeRef = personService.getPerson(user);
-        if (secret.equals("")) {
+        if ("".equals(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
             nodeService.setProperty(userNodeRef, totpSecretQname, secret);
@@ -104,10 +103,10 @@ public class TotpService {
         }
 
         String mimeType = generator.getImageMimeType();
-        String dataUri = getDataUriForImage(imageData, mimeType);
-        return dataUri;
+        return getDataUriForImage(imageData, mimeType);
     }
 
     public void init() {
+        logger.info("Starting " + TotpService.class.getName());
     }
 }

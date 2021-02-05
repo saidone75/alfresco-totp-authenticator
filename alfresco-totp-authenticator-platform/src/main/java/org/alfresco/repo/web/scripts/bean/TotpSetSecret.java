@@ -35,9 +35,7 @@ public class TotpSetSecret extends DeclarativeWebScript {
         {
             model.put("result", e.getMessage());
         }
-        finally {
-            return model;
-        }
+        return model;
     }
 
 }
