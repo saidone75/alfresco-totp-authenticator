@@ -1,7 +1,7 @@
-package org.alfresco.repo.web.scripts.bean;
+package org.saidone.alfresco.repo.web.scripts.bean;
 
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
-import org.alfresco.repo.security.authentication.TotpService;
+import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;

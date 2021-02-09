@@ -20,24 +20,24 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="webscript.org.saidone.repository.login.post"
-		  class="org.alfresco.repo.web.scripts.bean.TotpLoginPost"
+		  class="org.saidone.alfresco.repo.web.scripts.bean.TotpLoginPost"
 		  parent="webscript">
 		<property name="authenticationService" ref="AuthenticationService" />
 		<property name="totpService" ref="totpService" />
 		<property name="eventPublisher" ref="eventPublisher" />
 	</bean>
 	<bean id="webscript.org.saidone.repository.setsecret.get"
-		  class="org.alfresco.repo.web.scripts.bean.TotpSetSecret"
+		  class="org.saidone.alfresco.repo.web.scripts.bean.TotpSetSecret"
 		  parent="webscript">
 		<property name="totpService" ref="totpService" />
 	</bean>
 	<bean id="webscript.org.saidone.repository.getsecret.get"
-		  class="org.alfresco.repo.web.scripts.bean.TotpGetSecret"
+		  class="org.saidone.alfresco.repo.web.scripts.bean.TotpGetSecret"
 		  parent="webscript">
 		<property name="totpService" ref="totpService" />
 	</bean>
 	<bean id="webscript.org.saidone.repository.gensecret.get"
-		  class="org.alfresco.repo.web.scripts.bean.TotpGenSecret"
+		  class="org.saidone.alfresco.repo.web.scripts.bean.TotpGenSecret"
 		  parent="webscript">
 		<property name="totpService" ref="totpService" />
 	</bean>
