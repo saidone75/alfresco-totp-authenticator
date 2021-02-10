@@ -72,13 +72,14 @@ public class TotpService {
         return secretGenerator.generate();
     }
 
-    public void setSecret(String user, String secret) {
+    public String setSecret(String user, String secret) {
         NodeRef userNodeRef = personService.getPerson(user);
         if ("".equals(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
             nodeService.setProperty(userNodeRef, totpSecretQname, secret);
         }
+        return (String) nodeService.getProperty(userNodeRef, totpSecretQname);
     }
 
     public String getSecret(String user) {
