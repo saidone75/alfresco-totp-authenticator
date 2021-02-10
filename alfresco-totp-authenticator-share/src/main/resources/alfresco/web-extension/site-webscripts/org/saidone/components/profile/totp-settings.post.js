@@ -12,7 +12,7 @@ function main()
     }
     else if (args[1] == "clear-token")
     {
-        var result = connector.get("/security/setsecret?secret=");
+        var result = connector.get("/security/setsecret");
         if (result.status == 200)
         {
             model.success = true;

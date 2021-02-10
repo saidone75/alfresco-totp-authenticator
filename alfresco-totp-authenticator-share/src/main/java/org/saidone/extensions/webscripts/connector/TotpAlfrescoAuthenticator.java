@@ -1,21 +1,3 @@
-/**
- * Copyright (C) 2005-2009 Alfresco Software Limited.
- *
- * This file is part of the Spring Surf Extension project.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.saidone.extensions.webscripts.connector;
 
 import java.text.MessageFormat;
@@ -24,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.saidone.web.site.SlingshotUserFactory;
+import org.saidone.web.site.TotpSlingshotUserFactory;
 import org.springframework.extensions.config.RemoteConfigElement;
 import org.springframework.extensions.config.RemoteConfigElement.EndpointDescriptor;
 import org.springframework.extensions.surf.exception.AuthenticationException;
@@ -35,22 +17,9 @@ import org.springframework.extensions.webscripts.connector.RemoteClient;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.extensions.webscripts.json.JSONWriter;
 
-/**
- * An implementation of an Alfresco ticket or cookie-based Authenticator.
- * <p>
- * This Authenticator can be plugged into a connector to allow the connector
- * to handshake with an Alfresco Repository. This handshake involves POSTing
- * the username and password to the /api/login WebScript.
- * <p>
- * A ticket or cookie is returned that is then stored in a connector session.
- *
- * @author muzquiano
- * @author Kevin Roast
- * @author saidone
- */
-public class AlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator
+public class TotpAlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator
 {
-    private static Log logger = LogFactory.getLog(AlfrescoAuthenticator.class);
+    private static Log logger = LogFactory.getLog(TotpAlfrescoAuthenticator.class);
 
     private static final String JSON_LOGIN = "'{'\"username\": \"{0}\", \"password\": \"{1}\", \"token\": \"{2}\"'}'";
     private static final String API_LOGIN = "/api/login";
@@ -58,9 +27,6 @@ public class AlfrescoAuthenticator extends org.springframework.extensions.webscr
 
     public final static String CS_PARAM_ALF_TICKET = "alfTicket";
 
-    /* (non-Javadoc)
-     * @see org.alfresco.connector.AbstractAuthenticator#authenticate(java.lang.String, org.alfresco.connector.Credentials, org.alfresco.connector.ConnectorSession)
-     */
     public ConnectorSession authenticate(String endpoint, Credentials credentials, ConnectorSession connectorSession)
             throws AuthenticationException
     {
@@ -89,7 +55,7 @@ public class AlfrescoAuthenticator extends org.springframework.extensions.webscr
                 logger.debug("Authenticating user: " + user);
 
             // retrieve token if any
-            token = (String)credentials.getProperty(SlingshotUserFactory.CREDENTIAL_TOKEN);
+            token = (String)credentials.getProperty(TotpSlingshotUserFactory.CREDENTIAL_TOKEN);
 
             // POST to the Alfresco login WebScript
             remoteClient.setRequestContentType(MIMETYPE_APPLICATION_JSON);
@@ -151,9 +117,6 @@ public class AlfrescoAuthenticator extends org.springframework.extensions.webscr
         return cs;
     }
 
-    /**
-     * @return the REST URL to be used for login requests
-     */
     protected String getLoginURL()
     {
         return API_LOGIN;
