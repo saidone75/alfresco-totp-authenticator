@@ -17,24 +17,31 @@ public class TotpSetSecret extends DeclarativeWebScript {
     /**
      * @param totpService TotpService
      */
-    public void setTotpService(TotpService totpService)
-    {
+    public void setTotpService(TotpService totpService) {
         this.totpService = totpService;
     }
 
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
+
         Map<String, Object> model = new HashMap<String, Object>();
-        try {
-            String user = AuthenticationUtil.getFullyAuthenticatedUser();
-            String secret = req.getParameter("secret");
-            totpService.setSecret(user, secret);
-            model.put("result", "OK");
-        }
-        catch (Exception e)
+
+        String user = AuthenticationUtil.getFullyAuthenticatedUser();
+
+        String secret = req.getParameter("secret");
+        if (null != secret && !secret.matches("^[A-Z0-9]{32}$"))
         {
-            model.put("result", e.getMessage());
+            secret = "";
         }
+        secret = totpService.setSecret(user, secret);
+        model.put("secret", secret);
+
+        String dataUri = null;
+        if (secret != null) {
+            dataUri = totpService.getDataUri(user, secret);
+        }
+        model.put("dataUri", dataUri);
+   
         return model;
     }
 

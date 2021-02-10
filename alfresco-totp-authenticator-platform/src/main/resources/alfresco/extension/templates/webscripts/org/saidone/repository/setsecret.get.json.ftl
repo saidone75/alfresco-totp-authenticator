@@ -1,6 +1,7 @@
 {
 	"data":
 	{
-		"result":"${jsonUtils.encodeJSONString(result)}"
+		"secret":"${jsonUtils.encodeJSONString(secret)!}",
+		"dataUri":"${jsonUtils.encodeJSONString(dataUri)!}"
 	}
 }
