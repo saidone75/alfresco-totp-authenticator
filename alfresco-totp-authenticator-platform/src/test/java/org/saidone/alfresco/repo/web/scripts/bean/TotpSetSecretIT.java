@@ -2,12 +2,8 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.apache.http.HttpEntity;
-import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-import org.keycloak.authorization.client.util.Http;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TotpSetSecretIT extends TotpBaseIT {
