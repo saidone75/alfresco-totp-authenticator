@@ -36,7 +36,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         String secret = data.get("secret").getAsString();
         String dataUri = data.get("dataUri").getAsString();
         assertTrue("Secret is not empty ", "".equals(secret));
-        assertNotNull("Image data is not empty", "".equals(dataUri));
+        assertTrue("Image data is not empty", "".equals(dataUri));
     }
 
 }
