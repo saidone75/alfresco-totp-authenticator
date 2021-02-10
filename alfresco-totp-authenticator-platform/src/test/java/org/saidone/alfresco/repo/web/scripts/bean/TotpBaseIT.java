@@ -22,7 +22,7 @@ public class TotpBaseIT {
     private static final String ACS_ENDPOINT_PROP = "acs.endpoint.path";
     private static final String ACS_DEFAULT_ENDPOINT = "http://localhost:8080/alfresco";
 
-    protected void testWebScriptCall(String Url) throws Exception {
+    protected String testWebScriptCall(String Url) throws Exception {
         String webscriptURL = getPlatformEndpoint() + Url;
 
         // Login credentials for Alfresco Repo
@@ -36,6 +36,7 @@ public class TotpBaseIT {
                 .build();
 
         // Execute Web Script call
+        String response;
         try {
             HttpGet httpget = new HttpGet(webscriptURL);
             HttpResponse httpResponse = httpclient.execute(httpget);
@@ -43,19 +44,26 @@ public class TotpBaseIT {
                     HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
             HttpEntity entity = httpResponse.getEntity();
             assertNotNull("Response from Web Script is null", entity);
-            Gson gson = new Gson();
-            JsonObject data = (JsonObject)gson.fromJson(EntityUtils.toString(entity), JsonObject.class).get("data");
-            String secret = data.get("secret").getAsString();
-            String dataUri = data.get("dataUri").getAsString();
-            assertTrue("Secret length mismatch", (("".equals(secret)) || secret.matches("^[A-Z0-9]{32}$")));
-            assertNotNull("Image data is null", dataUri);
+            response = EntityUtils.toString(entity);
+
         } finally {
             httpclient.close();
         }
+        return response;
     }
 
     private String getPlatformEndpoint() {
         final String platformEndpoint = System.getProperty(ACS_ENDPOINT_PROP);
         return StringUtils.isNotBlank(platformEndpoint) ? platformEndpoint : ACS_DEFAULT_ENDPOINT;
     }
+
+    protected void assertStandardJsonResponse(String response) throws Exception {
+        Gson gson = new Gson();
+        JsonObject data = (JsonObject)gson.fromJson(response, JsonObject.class).get("data");
+        String secret = data.get("secret").getAsString();
+        String dataUri = data.get("dataUri").getAsString();
+        assertTrue("Secret length mismatch", (("".equals(secret)) || secret.matches("^[A-Z0-9]{32}$")));
+        assertNotNull("Image data is null", dataUri);
+    }
+
 }
