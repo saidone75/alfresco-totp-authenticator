@@ -24,6 +24,7 @@ public class TotpService {
     private static final Log logger = LogFactory.getLog(TotpService.class);
     private PersonService personService;
     private NodeService nodeService;
+    private String issuer;
 
     public static final QName totpSecretQname = QName.createQName("org.saidone", "totpsecret");
 
@@ -39,6 +40,13 @@ public class TotpService {
      */
     public void setNodeService(NodeService nodeService) {
         this.nodeService = nodeService;
+    }
+
+    /**
+     * @param issuer String
+     */
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
     }
 
     public void authorizeToken(String username, String token) {
@@ -89,7 +97,7 @@ public class TotpService {
         QrData data = new QrData.Builder()
                 .label(user)
                 .secret(secret)
-                .issuer("Alfresco")
+                .issuer(issuer)
                 .algorithm(HashingAlgorithm.SHA1)
                 .digits(6)
                 .period(30)
