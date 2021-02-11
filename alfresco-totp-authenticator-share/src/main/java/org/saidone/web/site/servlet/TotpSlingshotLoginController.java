@@ -35,9 +35,9 @@ public class TotpSlingshotLoginController extends org.alfresco.web.site.servlet.
     {
         request.setCharacterEncoding("UTF-8");
 
-        String username = (String) request.getParameter(AbstractLoginController.PARAM_USERNAME);
-        String password = (String) request.getParameter(AbstractLoginController.PARAM_PASSWORD);
-        String token = (String) request.getParameter(PARAM_TOKEN);
+        String username = request.getParameter(AbstractLoginController.PARAM_USERNAME);
+        String password = request.getParameter(AbstractLoginController.PARAM_PASSWORD);
+        String token = request.getParameter(PARAM_TOKEN);
 
         boolean success = false;
         try

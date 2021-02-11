@@ -19,7 +19,7 @@ import org.springframework.extensions.webscripts.json.JSONWriter;
 
 public class TotpAlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator
 {
-    private static Log logger = LogFactory.getLog(TotpAlfrescoAuthenticator.class);
+    private static final Log logger = LogFactory.getLog(TotpAlfrescoAuthenticator.class);
 
     private static final String JSON_LOGIN = "'{'\"username\": \"{0}\", \"password\": \"{1}\", \"token\": \"{2}\"'}'";
     private static final String API_LOGIN = "/api/login";
