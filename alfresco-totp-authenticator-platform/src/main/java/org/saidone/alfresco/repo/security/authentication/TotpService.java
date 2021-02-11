@@ -44,22 +44,20 @@ public class TotpService {
     public void authorizeToken(String username, String token) {
         try {
             AuthenticationUtil.runAs(
-                    new AuthenticationUtil.RunAsWork<String>() {
-                        public String doWork() throws Exception {
-                            NodeRef user = personService.getPerson(username);
-                            String secret = (String) nodeService.getProperty(user, totpSecretQname);
-                            if (secret != null)
-                            // token required
-                            {
-                                TimeProvider timeProvider = new SystemTimeProvider();
-                                CodeGenerator codeGenerator = new DefaultCodeGenerator();
-                                CodeVerifier verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
-                                if (!verifier.isValidCode(secret, token)) {
-                                    throw new AuthenticationException("Invalid token");
-                                }
+                    (AuthenticationUtil.RunAsWork<String>) () -> {
+                        NodeRef user = personService.getPerson(username);
+                        String secret = (String) nodeService.getProperty(user, totpSecretQname);
+                        if (secret != null)
+                        // token required
+                        {
+                            TimeProvider timeProvider = new SystemTimeProvider();
+                            CodeGenerator codeGenerator = new DefaultCodeGenerator();
+                            CodeVerifier verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
+                            if (!verifier.isValidCode(secret, token)) {
+                                throw new AuthenticationException("Invalid token");
                             }
-                            return null;
                         }
+                        return null;
                     }, AuthenticationUtil.getSystemUserName());
         } catch (Exception e) {
             logger.error(e.getMessage());
