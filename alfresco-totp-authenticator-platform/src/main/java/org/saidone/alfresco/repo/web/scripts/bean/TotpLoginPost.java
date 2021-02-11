@@ -1,42 +1,13 @@
-/*
- * #%L
- * Alfresco Remote API
- * %%
- * Copyright (C) 2005 - 2016 Alfresco Software Limited
- * %%
- * This file is part of the Alfresco software. 
- * If the software was purchased under a paid Alfresco license, the terms of 
- * the paid license agreement will prevail.  Otherwise, the software is 
- * provided under the following open source license terms:
- * 
- * Alfresco is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * Alfresco is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- * 
- * You should have received a copy of the GNU Lesser General Public License
- * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
- * #L%
- */
 package org.saidone.alfresco.repo.web.scripts.bean;
 
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
-import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.alfresco.service.cmr.security.AuthenticationService;
-import org.alfresco.sync.events.types.Event;
 import org.alfresco.sync.events.types.RepositoryEventImpl;
-import org.alfresco.sync.repo.events.EventPreparator;
 import org.alfresco.sync.repo.events.EventPublisher;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.surf.util.Content;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptException;
@@ -53,7 +24,6 @@ import java.util.Map;
  */
 public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
 {
-    private static final Log logger = LogFactory.getLog(TotpLoginPost.class);
     // dependencies
     private AuthenticationService authenticationService;
     private TotpService totpService;
@@ -151,18 +121,14 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
             // get ticket
             authenticationService.authenticate(username, password.toCharArray());
 
-            eventPublisher.publishEvent(new EventPreparator(){
-                @Override
-                public Event prepareEvent(String user, String networkId, String transactionId)
-                {
-                    // TODO need to fix up to pass correct seqNo and alfrescoClientId
-                    return new RepositoryEventImpl(-1l, "login", transactionId, networkId, new Date().getTime(),
-                            username, null);
-                }
+            eventPublisher.publishEvent((user, networkId, transactionId) -> {
+                // TODO need to fix up to pass correct seqNo and alfrescoClientId
+                return new RepositoryEventImpl(-1L, "login", transactionId, networkId, new Date().getTime(),
+                        username, null);
             });
 
             // add ticket to model for javascript and template access
-            Map<String, Object> model = new HashMap<String, Object>(7, 1.0f);
+            Map<String, Object> model = new HashMap<>(7, 1.0f);
             model.put("username", username);
             model.put("ticket",  authenticationService.getCurrentTicket());
 
