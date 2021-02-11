@@ -13,17 +13,14 @@ public class TotpGenSecret extends TotpWebScript {
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
-        Map<String, Object> model = new HashMap<String, Object>();
+        Map<String, Object> model = new HashMap<>();
 
         String user = AuthenticationUtil.getFullyAuthenticatedUser();
 
-        String secret = totpService.generateSecret();
-        model.put("secret", secret);
+        totpService.setSecret(user, totpService.generateSecret());
 
-        String dataUri = totpService.getDataUri(user, secret);
-        model.put("dataUri", dataUri);
-
-        totpService.setSecret(user, secret);
+        model.put("secret", totpService.getSecret(user));
+        model.put("dataUri", totpService.getDataUri(user));
 
         return model;
     }

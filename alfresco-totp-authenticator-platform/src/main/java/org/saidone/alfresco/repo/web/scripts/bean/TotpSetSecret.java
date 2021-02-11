@@ -6,6 +6,7 @@ import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class TotpSetSecret extends TotpWebScript {
@@ -18,19 +19,16 @@ public class TotpSetSecret extends TotpWebScript {
         String user = AuthenticationUtil.getFullyAuthenticatedUser();
 
         String secret = req.getParameter("secret");
-        if (null != secret && !secret.matches("^[A-Z0-9]{32}$"))
-        {
+        if (null != secret) secret = secret.toUpperCase(Locale.ROOT);
+        if (null != secret && !secret.matches("^[A-Z0-9]{32}$")) {
             secret = "";
         }
-        secret = totpService.setSecret(user, secret);
-        model.put("secret", secret);
 
-        String dataUri = null;
-        if (secret != null) {
-            dataUri = totpService.getDataUri(user, secret);
-        }
-        model.put("dataUri", dataUri);
-   
+        totpService.setSecret(user, secret);
+
+        model.put("secret", totpService.getSecret(user));
+        model.put("dataUri", totpService.getDataUri(user));
+
         return model;
     }
 
