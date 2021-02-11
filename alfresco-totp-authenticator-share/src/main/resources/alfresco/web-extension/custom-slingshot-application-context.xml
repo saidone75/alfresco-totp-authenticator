@@ -3,41 +3,35 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-   
-   <!--
-    Define beans related to this Share extension here, such as
-     evaluators and resource bootstrapping.
 
-     Note. Any configuration related to the whole Share.war webapp
-           (i.e. not specific to this share extension) should be
-            placed in the alfresco-allinone/share/src/main/resources/alfresco/web-extension/custom-slingshot-application-context.xml file
-   -->
+    <bean id="org.saidone.alfresco-totp-authenticator-share.resources"
+          class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+        <property name="resourceBundles">
+            <list>
+                <value>alfresco.web-extension.messages.alfresco-totp-authenticator-share</value>
+            </list>
+        </property>
+    </bean>
 
-   <!-- Add module specific messages and labels -->
-   <bean id="org.saidone.alfresco-totp-authenticator-share.resources"
-         class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
-      <property name="resourceBundles">
-         <list>
-            <value>alfresco.web-extension.messages.alfresco-totp-authenticator-share</value>
-         </list>
-      </property>
-   </bean>
+    <bean id="user.factory" class="org.saidone.web.site.TotpSlingshotUserFactory" parent="webframework.factory.base"/>
 
-   <bean id="user.factory" class="org.saidone.web.site.SlingshotUserFactory" parent="webframework.factory.base" />
-
-   <bean id="loginController" class="org.saidone.web.site.servlet.SlingshotLoginController">
-      <property name="cacheSeconds" value="-1" />
-      <property name="useExpiresHeader"><value>true</value></property>
-      <property name="useCacheControlHeader"><value>true</value></property>
-      <property name="userFactory" ref="user.factory"></property>
-      <property name="webFrameworkConfiguration" ref="webframework.config.element"></property>
-      <property name="supportedMethods">
-         <list>
-            <value>HEAD</value>
-            <value>POST</value>
-            <value>OPTIONS</value>
-         </list>
-      </property>
-   </bean>
+    <bean id="loginController" class="org.saidone.web.site.servlet.TotpSlingshotLoginController">
+        <property name="cacheSeconds" value="-1"/>
+        <property name="useExpiresHeader">
+            <value>true</value>
+        </property>
+        <property name="useCacheControlHeader">
+            <value>true</value>
+        </property>
+        <property name="userFactory" ref="user.factory"></property>
+        <property name="webFrameworkConfiguration" ref="webframework.config.element"></property>
+        <property name="supportedMethods">
+            <list>
+                <value>HEAD</value>
+                <value>POST</value>
+                <value>OPTIONS</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>

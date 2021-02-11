@@ -1,42 +1,40 @@
 <alfresco-config>
-   
-   <config evaluator="string-compare" condition="WebFramework">
-      <web-framework>
-         <defaults>
-            <page-type>
-               <id>login</id>
-               <page-instance-id>alfresco-totp-login</page-instance-id>
-            </page-type>
-         </defaults>
-      </web-framework>
-   </config>
 
-   <config evaluator="string-compare" condition="Remote">
-   <remote>
+    <config evaluator="string-compare" condition="WebFramework">
+        <web-framework>
+            <defaults>
+                <page-type>
+                    <id>login</id>
+                    <page-instance-id>alfresco-totp-login</page-instance-id>
+                </page-type>
+            </defaults>
+        </web-framework>
+    </config>
 
-   <!-- Authenticator Implementations -->
-   <authenticator>
-      <id>alfresco-ticket</id>
-      <name>Alfresco Authenticator</name>
-      <description>Alfresco Authenticator</description>
-      <class>org.saidone.extensions.webscripts.connector.AlfrescoAuthenticator</class>
-   </authenticator>
-   </remote>
-   </config>
+    <config evaluator="string-compare" condition="Remote">
+        <remote>
+            <authenticator>
+                <id>alfresco-ticket</id>
+                <name>Alfresco Authenticator</name>
+                <description>Alfresco Authenticator</description>
+                <class>org.saidone.extensions.webscripts.connector.TotpAlfrescoAuthenticator</class>
+            </authenticator>
+        </remote>
+    </config>
 
-   <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
-      <filter>
-         <rule>
-            <request>
-               <method>POST</method>
-               <path>/service/components/profile/totp-settings</path>
-            </request>
-            <action name="generateToken">
-               <param name="session">{token}</param>
-               <param name="cookie">{token}</param>
-            </action>
-         </rule>
-      </filter>
-   </config>
+    <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
+        <filter>
+            <rule>
+                <request>
+                    <method>POST</method>
+                    <path>/service/components/profile/totp-settings</path>
+                </request>
+                <action name="generateToken">
+                    <param name="session">{token}</param>
+                    <param name="cookie">{token}</param>
+                </action>
+            </rule>
+        </filter>
+    </config>
 
 </alfresco-config>
