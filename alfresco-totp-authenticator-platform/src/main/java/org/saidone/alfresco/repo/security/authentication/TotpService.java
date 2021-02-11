@@ -78,14 +78,13 @@ public class TotpService {
         return secretGenerator.generate();
     }
 
-    public String setSecret(String user, String secret) {
+    public void setSecret(String user, String secret) {
         NodeRef userNodeRef = personService.getPerson(user);
         if ("".equals(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
             nodeService.setProperty(userNodeRef, totpSecretQname, secret);
         }
-        return (String) nodeService.getProperty(userNodeRef, totpSecretQname);
     }
 
     public String getSecret(String user) {
@@ -93,10 +92,10 @@ public class TotpService {
         return (String) nodeService.getProperty(userNodeRef, totpSecretQname);
     }
 
-    public String getDataUri(String user, String secret) {
+    public String getDataUri(String user) {
         QrData data = new QrData.Builder()
                 .label(user)
-                .secret(secret)
+                .secret(this.getSecret(user))
                 .issuer(issuer)
                 .algorithm(HashingAlgorithm.SHA1)
                 .digits(6)
