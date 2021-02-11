@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.saidone</groupId>
     <artifactId>alfresco-totp-authenticator-share</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>alfresco-totp-authenticator-share Share JAR Module</name>
     <description>Sample Share JAR Module (to be included in the share.war)</description>
     <packaging>jar</packaging>

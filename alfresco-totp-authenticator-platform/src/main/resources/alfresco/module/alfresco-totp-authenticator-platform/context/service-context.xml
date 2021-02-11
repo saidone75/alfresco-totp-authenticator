@@ -23,6 +23,7 @@
     <bean id="totpService" class="org.saidone.alfresco.repo.security.authentication.TotpService" init-method="init" >
         <property name="personService" ref="PersonService" />
         <property name="nodeService" ref="NodeService" />
+        <property name="issuer" value="${totp.qrdata.issuer}"/>
     </bean>
 
 </beans>
