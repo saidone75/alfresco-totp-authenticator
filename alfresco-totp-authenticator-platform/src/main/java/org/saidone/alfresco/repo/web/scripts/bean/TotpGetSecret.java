@@ -1,26 +1,14 @@
 package org.saidone.alfresco.repo.web.scripts.bean;
 
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
-import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.Cache;
-import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TotpGetSecret extends DeclarativeWebScript {
-
-    private TotpService totpService;
-
-    /**
-     * @param totpService TotpService
-     */
-    public void setTotpService(TotpService totpService)
-    {
-        this.totpService = totpService;
-    }
+public class TotpGetSecret extends TotpWebScript {
 
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
