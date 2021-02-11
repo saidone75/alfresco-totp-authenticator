@@ -65,4 +65,5 @@ and restart Alfresco.
 Take a look at this short explanation video [here](https://vimeo.com/507443676).
 
 ### Pre-built AMPs
-On [Actions](https://github.com/saidone75/alfresco-totp-authenticator/actions) just click on a successfully completed Java CI workflow run, on the bottom of the page there will be the produced artifacts. Stable [releases](https://github.com/saidone75/alfresco-totp-authenticator/releases) will include the related build.
+Stable [releases](https://github.com/saidone75/alfresco-totp-authenticator/releases) include the related build.
+Java CI successful workflows on [Actions](https://github.com/saidone75/alfresco-totp-authenticator/actions) will issue development artifacts.
