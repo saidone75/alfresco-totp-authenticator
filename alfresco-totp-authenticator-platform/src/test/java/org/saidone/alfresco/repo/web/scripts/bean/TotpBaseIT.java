@@ -57,13 +57,4 @@ public class TotpBaseIT {
         return StringUtils.isNotBlank(platformEndpoint) ? platformEndpoint : ACS_DEFAULT_ENDPOINT;
     }
 
-    protected void assertStandardJsonResponse(String response) throws Exception {
-        Gson gson = new Gson();
-        JsonObject data = (JsonObject)gson.fromJson(response, JsonObject.class).get("data");
-        String secret = data.get("secret").getAsString();
-        String dataUri = data.get("dataUri").getAsString();
-        assertTrue("Secret length mismatch", (("".equals(secret)) || secret.matches("^[A-Z0-9]{32}$")));
-        assertNotNull("Image data is null", dataUri);
-    }
-
 }
