@@ -62,11 +62,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-  			<groupId>javax.xml.bind</groupId>
-  			<artifactId>jaxb-api</artifactId>
-  			<version>2.3.0</version>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
             <scope>provided</scope>
-		</dependency> 
+        </dependency>
 
         <!-- The main Alfresco Repo dependency for compiling Java code in src/main/java -->
         <dependency>
@@ -133,13 +133,24 @@
 
     <build>
         <plugins>
-            <!--
-                    Build an AMP if 3rd party libs are needed by the extensions
-                    JARs are the default artifact produced in your modules, if you want to build an amp for each module
-                    you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
-                    the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
-                    module.
-                -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -202,64 +213,6 @@
                     </nonFilteredFileExtensions>
                 </configuration>
                 <executions>
-                    <execution>
-                        <id>copy-and-filter-docker-compose-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/docker</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>docker</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-and-filter-docker-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/docker</directory>
-                                    <filtering>true</filtering>
-                                    <excludes>
-                                        <exclude>**/*.jar</exclude>
-                                        <exclude>**/*.so</exclude>
-                                        <exclude>**/*.gz</exclude>
-                                    </excludes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-and-filter-docker-resources-non-filtered</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/docker</directory>
-                                    <filtering>false</filtering>
-                                    <includes>
-                                        <include>**/*.jar</include>
-                                        <include>**/*.so</include>
-                                        <include>**/*.gz</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
                     <execution>
                         <id>copy-repository-extension</id>
                         <phase>package</phase>
