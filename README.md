@@ -60,7 +60,7 @@ and restart Alfresco.
 - Log into Alfresco
 - Go to your profile page and click on *TOTP settings* tab
 - Click on *Activate TOTP* button to generate a secret and activate TOTP authentication
-- Import the secret on your favourite OTP application, personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
+- Import the secret on your favourite OTP application (e.g. by scanning the QR Code), personally I use [andOTP](https://github.com/andOTP/andOTP) on Android but there's plenty of choices
 
 Take a look at this short explanation video [here](https://vimeo.com/507443676).
 
