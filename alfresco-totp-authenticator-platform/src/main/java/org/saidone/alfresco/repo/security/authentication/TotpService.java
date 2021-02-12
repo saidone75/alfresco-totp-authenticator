@@ -6,7 +6,6 @@ import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrGenerator;
 import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
-import dev.samstevens.totp.secret.SecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import dev.samstevens.totp.time.TimeProvider;
 import org.alfresco.repo.security.authentication.AuthenticationException;
@@ -53,8 +52,9 @@ public class TotpService {
         try {
             AuthenticationUtil.runAs(
                     (AuthenticationUtil.RunAsWork<String>) () -> {
-                        NodeRef user = personService.getPerson(username);
-                        String secret = (String) nodeService.getProperty(user, totpSecretQname);
+                        String secret = (String) nodeService.getProperty(
+                                personService.getPerson(username),
+                                totpSecretQname);
                         if (secret != null)
                         // token required
                         {
@@ -74,9 +74,10 @@ public class TotpService {
     }
 
     public void generateSecret(String user) {
-        SecretGenerator secretGenerator = new DefaultSecretGenerator();
-        NodeRef userNodeRef = personService.getPerson(user);
-        nodeService.setProperty(userNodeRef, totpSecretQname, secretGenerator.generate());
+        nodeService.setProperty(
+                personService.getPerson(user),
+                totpSecretQname,
+                new DefaultSecretGenerator().generate());
     }
 
     public void setSecret(String user, String secret) {
@@ -89,8 +90,9 @@ public class TotpService {
     }
 
     public String getSecret(String user) {
-        NodeRef userNodeRef = personService.getPerson(user);
-        return (String) nodeService.getProperty(userNodeRef, totpSecretQname);
+        return (String) nodeService.getProperty(
+                personService.getPerson(user),
+                totpSecretQname);
     }
 
     public String getDataUri(String user) {
