@@ -17,7 +17,7 @@ public class TotpGenSecret extends TotpWebScript {
 
         String user = AuthenticationUtil.getFullyAuthenticatedUser();
 
-        totpService.setSecret(user, totpService.generateSecret());
+        totpService.generateSecret(user);
 
         model.put("secret", totpService.getSecret(user));
         model.put("dataUri", totpService.getDataUri(user));

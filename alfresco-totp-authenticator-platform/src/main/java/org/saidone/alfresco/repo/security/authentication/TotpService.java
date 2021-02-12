@@ -73,9 +73,10 @@ public class TotpService {
         }
     }
 
-    public String generateSecret() {
+    public void generateSecret(String user) {
         SecretGenerator secretGenerator = new DefaultSecretGenerator();
-        return secretGenerator.generate();
+        NodeRef userNodeRef = personService.getPerson(user);
+        nodeService.setProperty(userNodeRef, totpSecretQname, secretGenerator.generate());
     }
 
     public void setSecret(String user, String secret) {
@@ -93,25 +94,32 @@ public class TotpService {
     }
 
     public String getDataUri(String user) {
-        QrData data = new QrData.Builder()
-                .label(user)
-                .secret(this.getSecret(user))
-                .issuer(issuer)
-                .algorithm(HashingAlgorithm.SHA1)
-                .digits(6)
-                .period(30)
-                .build();
-
-        QrGenerator generator = new ZxingPngQrGenerator();
-        byte[] imageData = null;
-        try {
-            imageData = generator.generate(data);
-        } catch (QrGenerationException e) {
-            e.printStackTrace();
+        String secret = this.getSecret(user);
+        String dataUri;
+        if (null == secret)
+        {
+            dataUri = null;
         }
-
-        String mimeType = generator.getImageMimeType();
-        return getDataUriForImage(imageData, mimeType);
+        else {
+            QrData data = new QrData.Builder()
+                    .label(user)
+                    .secret(secret)
+                    .issuer(issuer)
+                    .algorithm(HashingAlgorithm.SHA1)
+                    .digits(6)
+                    .period(30)
+                    .build();
+            QrGenerator generator = new ZxingPngQrGenerator();
+            byte[] imageData = null;
+            try {
+                imageData = generator.generate(data);
+            } catch (QrGenerationException e) {
+                e.printStackTrace();
+            }
+            String mimeType = generator.getImageMimeType();
+            dataUri = getDataUriForImage(imageData, mimeType);
+        }
+        return dataUri;
     }
 
     public void init() {
