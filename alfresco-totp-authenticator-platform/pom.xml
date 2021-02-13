@@ -109,6 +109,10 @@
                     <groupId>com.github.jai-imageio</groupId>
                     <artifactId>jai-imageio-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.beust</groupId>
+                    <artifactId>jcommander</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>
