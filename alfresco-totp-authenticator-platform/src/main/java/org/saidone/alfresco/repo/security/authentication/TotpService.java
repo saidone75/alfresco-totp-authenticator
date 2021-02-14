@@ -1,13 +1,14 @@
 package org.saidone.alfresco.repo.security.authentication;
 
-import dev.samstevens.totp.code.*;
+import dev.samstevens.totp.code.DefaultCodeGenerator;
+import dev.samstevens.totp.code.DefaultCodeVerifier;
+import dev.samstevens.totp.code.HashingAlgorithm;
 import dev.samstevens.totp.exceptions.QrGenerationException;
 import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrGenerator;
 import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
-import dev.samstevens.totp.time.TimeProvider;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -58,10 +59,10 @@ public class TotpService {
                         if (secret != null)
                         // token required
                         {
-                            TimeProvider timeProvider = new SystemTimeProvider();
-                            CodeGenerator codeGenerator = new DefaultCodeGenerator();
-                            CodeVerifier verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
-                            if (!verifier.isValidCode(secret, token)) {
+                            if (!new DefaultCodeVerifier(
+                                    new DefaultCodeGenerator(),
+                                    new SystemTimeProvider())
+                                    .isValidCode(secret, token)) {
                                 throw new AuthenticationException("Invalid token");
                             }
                         }
@@ -98,11 +99,9 @@ public class TotpService {
     public String getDataUri(String user) {
         String secret = this.getSecret(user);
         String dataUri;
-        if (null == secret)
-        {
+        if (null == secret) {
             dataUri = null;
-        }
-        else {
+        } else {
             QrData data = new QrData.Builder()
                     .label(user)
                     .secret(secret)
