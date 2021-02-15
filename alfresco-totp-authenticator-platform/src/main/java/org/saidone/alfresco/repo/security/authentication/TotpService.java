@@ -56,15 +56,12 @@ public class TotpService {
                         String secret = (String) nodeService.getProperty(
                                 personService.getPerson(username),
                                 totpSecretQname);
-                        if (secret != null)
-                        // token required
-                        {
-                            if (!new DefaultCodeVerifier(
-                                    new DefaultCodeGenerator(),
-                                    new SystemTimeProvider())
-                                    .isValidCode(secret, token)) {
-                                throw new AuthenticationException("Invalid token");
-                            }
+                        if (secret != null &&
+                                !new DefaultCodeVerifier(
+                                        new DefaultCodeGenerator(),
+                                        new SystemTimeProvider())
+                                        .isValidCode(secret, token)) {
+                            throw new AuthenticationException("Invalid token");
                         }
                         return null;
                     }, AuthenticationUtil.getSystemUserName());
