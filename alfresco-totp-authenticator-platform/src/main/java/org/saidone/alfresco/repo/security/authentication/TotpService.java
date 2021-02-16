@@ -112,10 +112,10 @@ public class TotpService {
             try {
                 imageData = generator.generate(data);
             } catch (QrGenerationException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
-            String mimeType = generator.getImageMimeType();
-            dataUri = getDataUriForImage(imageData, mimeType);
+            dataUri = getDataUriForImage(imageData, generator.getImageMimeType());
         }
         return dataUri;
     }
