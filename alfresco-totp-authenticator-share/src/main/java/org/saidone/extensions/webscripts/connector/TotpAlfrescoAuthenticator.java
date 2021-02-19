@@ -17,8 +17,7 @@ import org.springframework.extensions.webscripts.connector.RemoteClient;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.extensions.webscripts.json.JSONWriter;
 
-public class TotpAlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator
-{
+public class TotpAlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator {
     private static final Log logger = LogFactory.getLog(TotpAlfrescoAuthenticator.class);
 
     private static final String JSON_LOGIN = "'{'\"username\": \"{0}\", \"password\": \"{1}\", \"token\": \"{2}\"'}'";
@@ -28,14 +27,14 @@ public class TotpAlfrescoAuthenticator extends org.springframework.extensions.we
     public final static String CS_PARAM_ALF_TICKET = "alfTicket";
 
     public ConnectorSession authenticate(String endpoint, Credentials credentials, ConnectorSession connectorSession)
-            throws AuthenticationException
-    {
+            throws AuthenticationException {
         ConnectorSession cs = null;
 
         String user, pass, token;
-        if (credentials != null && (user = (String)credentials.getProperty(Credentials.CREDENTIAL_USERNAME)) != null &&
-                (pass = (String)credentials.getProperty(Credentials.CREDENTIAL_PASSWORD)) != null)
-        {
+        if (credentials == null || (user = (String) credentials.getProperty(Credentials.CREDENTIAL_USERNAME)) == null ||
+                (pass = (String) credentials.getProperty(Credentials.CREDENTIAL_PASSWORD)) == null) {
+            logger.debug("No user credentials available - cannot authenticate.");
+        } else {
             // build a new remote client
 
             // Take endpointId from credentials as the endpoint may be remapped to allow an endpoint to credentials from
@@ -45,17 +44,15 @@ public class TotpAlfrescoAuthenticator extends org.springframework.extensions.we
             final String endpointId = credentials.getEndpointId();
             final RemoteConfigElement config = getConnectorService().getRemoteConfig();
             final EndpointDescriptor desc = config.getEndpointDescriptor(endpointId);
-            if (desc == null)
-            {
+            if (desc == null) {
                 throw new IllegalArgumentException("Unknown endpoint ID: " + endpointId);
             }
             final RemoteClient remoteClient = buildRemoteClient(config.getEndpointDescriptor(endpointId).getEndpointUrl());
 
-            if (logger.isDebugEnabled())
-                logger.debug("Authenticating user: " + user);
+            logger.debug("Authenticating user: " + user);
 
             // retrieve token if any
-            token = (String)credentials.getProperty(TotpSlingshotUserFactory.CREDENTIAL_TOKEN);
+            token = (String) credentials.getProperty(TotpSlingshotUserFactory.CREDENTIAL_TOKEN);
 
             // POST to the Alfresco login WebScript
             remoteClient.setRequestContentType(MIMETYPE_APPLICATION_JSON);
@@ -66,59 +63,41 @@ public class TotpAlfrescoAuthenticator extends org.springframework.extensions.we
             Response response = remoteClient.call(getLoginURL(), body);
 
             // read back the ticket
-            if (response.getStatus().getCode() == 200)
-            {
+            if (response.getStatus().getCode() == 200) {
                 String ticket;
-                try
-                {
+                try {
                     JSONObject json = new JSONObject(response.getResponse());
                     ticket = json.getJSONObject("data").getString("ticket");
-                }
-                catch (JSONException jErr)
-                {
+                } catch (JSONException jErr) {
                     // the ticket that came back could not be parsed
                     // this will cause the entire handshake to fail
                     throw new AuthenticationException(
                             "Unable to retrieve login ticket from Alfresco", jErr);
                 }
-
-                if (logger.isDebugEnabled())
-                    logger.debug("Parsed ticket: " + ticket);
+                logger.debug("Parsed ticket: " + ticket);
 
                 // place the ticket back into the connector session
-                if (connectorSession != null)
-                {
+                if (connectorSession != null) {
                     connectorSession.setParameter(CS_PARAM_ALF_TICKET, ticket);
 
                     // signal that this succeeded
                     cs = connectorSession;
                 }
-            }
-            else if (response.getStatus().getCode() == Status.STATUS_NO_CONTENT)
-            {
-                if (logger.isDebugEnabled())
-                    logger.debug("SC_NO_CONTENT(204) status received - retreiving auth cookies...");
+            } else if (response.getStatus().getCode() == Status.STATUS_NO_CONTENT) {
+                logger.debug("SC_NO_CONTENT(204) status received - retreiving auth cookies...");
 
                 // The login created an empty response, probably with cookies in the connectorSession. We succeeded.
                 processResponse(response, connectorSession);
                 cs = connectorSession;
+            } else {
+                logger.debug("Authentication failed, received response code: " + response.getStatus().getCode());
             }
-            else
-            {
-                if (logger.isDebugEnabled())
-                    logger.debug("Authentication failed, received response code: " + response.getStatus().getCode());
-            }
-        }
-        else if (logger.isDebugEnabled())
-        {
-            logger.debug("No user credentials available - cannot authenticate.");
         }
 
         return cs;
     }
 
-    protected String getLoginURL()
-    {
+    protected String getLoginURL() {
         return API_LOGIN;
     }
 }
