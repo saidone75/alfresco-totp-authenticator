@@ -1,13 +1,5 @@
 version: '3.4'
 services:
-#  Optional
-#  alfresco-totp-authenticator-platform-share:
-#    image: ${docker.share.image}:${alfresco.share.version}
-#    environment:
-#      REPO_HOST: alfresco-totp-authenticator-platform-acs
-#      REPO_PORT: 8080
-#    ports:
-#      - "${share.port}:8080"
   alfresco-totp-authenticator-platform-acs:
     image: alfresco-content-services-alfresco-totp-authenticator-platform:development
     build:
@@ -15,7 +7,7 @@ services:
       context: ../../../target
     environment:
       CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
-#      CATALINA_OPTS: "-XX:HotswapAgent=fatjar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+#     CATALINA_OPTS: "-XX:HotswapAgent=fatjar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
     command: ["catalina.sh", "run"]
     ports:
       - "${acs.port}:8080"
