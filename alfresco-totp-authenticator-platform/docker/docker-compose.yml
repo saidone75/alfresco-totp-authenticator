@@ -7,7 +7,7 @@ services:
       context: ../../../target
     environment:
       CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
-#     CATALINA_OPTS: "-XX:HotswapAgent=fatjar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+      #CATALINA_OPTS: "-XX:HotswapAgent=fatjar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
     command: ["catalina.sh", "run"]
     ports:
       - "${acs.port}:8080"

@@ -22,8 +22,7 @@ import java.util.Map;
 /**
  * Post based login script
  */
-public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
-{
+public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost {
     // dependencies
     private AuthenticationService authenticationService;
     private TotpService totpService;
@@ -32,24 +31,21 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
     /**
      * @param authenticationService AuthenticationService
      */
-    public void setAuthenticationService(AuthenticationService authenticationService)
-    {
+    public void setAuthenticationService(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
     /**
      * @param totpService TotpService
      */
-    public void setTotpService(TotpService totpService)
-    {
+    public void setTotpService(TotpService totpService) {
         this.totpService = totpService;
     }
 
     /**
      * @param eventPublisher EventPublisher
      */
-    public void setEventPublisher(EventPublisher eventPublisher)
-    {
+    public void setEventPublisher(EventPublisher eventPublisher) {
         this.eventPublisher = eventPublisher;
     }
 
@@ -57,64 +53,50 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
      * @see org.alfresco.web.scripts.DeclarativeWebScript#executeImpl(org.alfresco.web.scripts.WebScriptRequest, org.alfresco.web.scripts.WebScriptResponse)
      */
     @Override
-    protected Map<String, Object> executeImpl(WebScriptRequest req, Status status)
-    {
+    protected Map<String, Object> executeImpl(WebScriptRequest req, Status status) {
         // Extract user and password from JSON POST
         Content c = req.getContent();
-        if (c == null)
-        {
+        if (c == null) {
             throw new WebScriptException(Status.STATUS_BAD_REQUEST, "Missing POST body.");
         }
-        
+
         // TODO accept xml type.
-        
+
         // extract username and password from JSON object
         JSONObject json;
-        try
-        {
+        try {
             json = new JSONObject(c.getContent());
             String username = json.getString("username");
             String password = json.getString("password");
             String token = json.getString("token");
 
-            if (username == null || username.length() == 0)
-            {
+            if (username == null || username.length() == 0) {
                 throw new WebScriptException(HttpServletResponse.SC_BAD_REQUEST, "Username not specified");
             }
 
-            if (password == null)
-            {
+            if (password == null) {
                 throw new WebScriptException(HttpServletResponse.SC_BAD_REQUEST, "Password not specified");
             }
 
-            try
-            {
+            try {
                 return login(username, password, token);
-            }
-            catch(WebScriptException e)
-            {
+            } catch (WebScriptException e) {
                 status.setCode(e.getStatus());
                 status.setMessage(e.getMessage());
                 status.setRedirect(true);
                 return null;
             }
-        } 
-        catch (JSONException jErr)
-        {
-            throw new WebScriptException(Status.STATUS_BAD_REQUEST,
-                    "Unable to parse JSON POST body: " + jErr.getMessage());
-        }
-        catch (IOException ioErr)
-        {
-            throw new WebScriptException(Status.STATUS_INTERNAL_SERVER_ERROR,
-                    "Unable to retrieve POST body: " + ioErr.getMessage());
+        } catch (JSONException jErr) {
+            throw (WebScriptException) new WebScriptException(Status.STATUS_BAD_REQUEST,
+                    "Unable to parse JSON POST body: " + jErr.getMessage()).initCause(jErr);
+        } catch (IOException ioErr) {
+            throw (WebScriptException) new WebScriptException(Status.STATUS_INTERNAL_SERVER_ERROR,
+                    "Unable to retrieve POST body: " + ioErr.getMessage()).initCause(ioErr);
         }
     }
 
-    protected Map<String, Object> login(final String username, String password, String token)
-    {
-        try
-        {
+    protected Map<String, Object> login(final String username, String password, String token) {
+        try {
             // check totp
             totpService.authorizeToken(username, token);
 
@@ -130,16 +112,12 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost
             // add ticket to model for javascript and template access
             Map<String, Object> model = new HashMap<>(7, 1.0f);
             model.put("username", username);
-            model.put("ticket",  authenticationService.getCurrentTicket());
+            model.put("ticket", authenticationService.getCurrentTicket());
 
             return model;
-        }
-        catch(AuthenticationException e)
-        {
-            throw new WebScriptException(HttpServletResponse.SC_FORBIDDEN, "Login failed");
-        }
-        finally
-        {
+        } catch (AuthenticationException e) {
+            throw (WebScriptException) new WebScriptException(HttpServletResponse.SC_FORBIDDEN, "Login failed").initCause(e);
+        } finally {
             AuthenticationUtil.clearCurrentSecurityContext();
         }
     }
