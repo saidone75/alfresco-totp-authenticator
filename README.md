@@ -12,6 +12,8 @@ Distributed for free without any warranty. Use at your own risk.
 
 Tested with **Alfresco Community Edition 6.2 GA**.
 
+[![Alfresco TOTP authenticator](alfresco-totp-authenticator-high-2.gif)](https://vimeo.com/507443676)
+
 ## Instructions
 ### Build
 Get the sources:
