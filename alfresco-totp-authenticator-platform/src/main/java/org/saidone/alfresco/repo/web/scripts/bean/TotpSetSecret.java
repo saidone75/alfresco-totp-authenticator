@@ -18,9 +18,12 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
+import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
+import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
 import java.util.HashMap;
@@ -34,7 +37,17 @@ public class TotpSetSecret extends TotpWebScript {
 
         Map<String, Object> model = new HashMap<>();
 
-        String user = AuthenticationUtil.getFullyAuthenticatedUser();
+        String user = req.getParameter("user");
+
+        if (user == null) {
+            user = AuthenticationUtil.getFullyAuthenticatedUser();
+        } else {
+            try {
+                new UserNameConstraint().evaluate(user);
+            } catch (ConstraintException e) {
+                throw new WebScriptException(e.getMessage());
+            }
+        }
 
         String secret = req.getParameter("secret");
         if (null != secret) secret = secret.toUpperCase(Locale.ROOT);
