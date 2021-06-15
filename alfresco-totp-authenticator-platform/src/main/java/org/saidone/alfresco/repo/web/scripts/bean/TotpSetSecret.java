@@ -45,7 +45,7 @@ public class TotpSetSecret extends TotpWebScript {
             try {
                 new UserNameConstraint().evaluate(user);
             } catch (ConstraintException e) {
-                throw new WebScriptException(e.getMessage());
+                throw new WebScriptException(e.getMessage(), e);
             }
         }
 
