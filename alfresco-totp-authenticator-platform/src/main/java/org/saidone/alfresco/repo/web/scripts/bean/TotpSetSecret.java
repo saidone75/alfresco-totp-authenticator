@@ -44,6 +44,9 @@ public class TotpSetSecret extends TotpWebScript {
         } else {
             try {
                 new UserNameConstraint().evaluate(user);
+                if (!AuthenticationUtil.getFullyAuthenticatedUser().equals("admin")) {
+                    throw new WebScriptException("Only admin can change other user's TOTP secret.");
+                }
             } catch (ConstraintException e) {
                 throw new WebScriptException(e.getMessage(), e);
             }
