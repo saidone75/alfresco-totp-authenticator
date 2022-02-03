@@ -50,6 +50,15 @@ public class TotpSetSecretIT extends TotpBaseIT {
     }
 
     @Test
+    public void testSetValidSecret3() throws Exception {
+        String secret = "aaaaaaaaAAAAAAAA0000000011111111";
+        String user = "ciao";
+        String response = testWebScriptCall("/s/security/setsecret?secret=" + secret + "&user=" + user);
+        assertStandardJsonResponse(response);
+        assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
+    }
+
+    @Test
     public void testSetEmptySecret() throws Exception {
         String response = testWebScriptCall("/s/security/setsecret");
         assertStandardJsonResponse(response);
