@@ -21,6 +21,7 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.dictionary.ConstraintException;
+import org.alfresco.service.cmr.security.AuthorityService;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptException;
@@ -31,6 +32,12 @@ import java.util.Locale;
 import java.util.Map;
 
 public class TotpSetSecret extends TotpWebScript {
+
+    private AuthorityService authorityService;
+
+    public void setAuthorityService(AuthorityService authorityService) {
+        this.authorityService = authorityService;
+    }
 
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
@@ -44,7 +51,8 @@ public class TotpSetSecret extends TotpWebScript {
         } else {
             try {
                 new UserNameConstraint().evaluate(user);
-                if (!AuthenticationUtil.getFullyAuthenticatedUser().equals("admin")) {
+                if (!authorityService.hasAdminAuthority() &&
+                        !user.equals(AuthenticationUtil.getFullyAuthenticatedUser())) {
                     throw new WebScriptException("Only admin can change other user's TOTP secret.");
                 }
             } catch (ConstraintException e) {

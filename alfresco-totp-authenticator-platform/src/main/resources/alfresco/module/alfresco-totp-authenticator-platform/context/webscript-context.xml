@@ -17,6 +17,7 @@
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpSetSecret"
           parent="webscript">
         <property name="totpService" ref="totpService"/>
+        <property name="authorityService" ref="authorityService"/>
     </bean>
 
     <bean id="webscript.org.saidone.repository.getsecret.get"
