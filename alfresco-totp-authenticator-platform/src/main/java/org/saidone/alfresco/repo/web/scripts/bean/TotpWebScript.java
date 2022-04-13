@@ -18,19 +18,27 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import org.alfresco.service.cmr.security.AuthorityService;
 import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 
 public class TotpWebScript extends DeclarativeWebScript {
 
     protected TotpService totpService;
+    protected AuthorityService authorityService;
 
     /**
      * @param totpService TotpService
      */
-    public void setTotpService(TotpService totpService)
-    {
+    public void setTotpService(TotpService totpService) {
         this.totpService = totpService;
+    }
+
+    /**
+     * @param authorityService AuthorityService
+     */
+    public void setAuthorityService(AuthorityService authorityService) {
+        this.authorityService = authorityService;
     }
 
 }

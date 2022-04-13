@@ -24,12 +24,14 @@
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpGetSecret"
           parent="webscript">
         <property name="totpService" ref="totpService"/>
+        <property name="authorityService" ref="authorityService"/>
     </bean>
 
     <bean id="webscript.org.saidone.repository.gensecret.get"
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpGenSecret"
           parent="webscript">
         <property name="totpService" ref="totpService"/>
+        <property name="authorityService" ref="authorityService"/>
     </bean>
 
 </beans>

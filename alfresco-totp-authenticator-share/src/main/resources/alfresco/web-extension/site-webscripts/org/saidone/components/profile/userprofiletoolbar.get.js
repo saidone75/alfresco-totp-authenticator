@@ -80,6 +80,10 @@ function main()
          // Add Following link
          addLink("otherfollowing-link", "following", "link.otherfollowing", [model.following]);
       }
+
+       // Add TOTP Settings link
+       if (user.isAdmin )addLink("totp-settings-link", "totp-settings", "link.totp-settings");
+
    }
 }
 

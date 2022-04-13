@@ -26,22 +26,24 @@
                 </div>
             </#if>
             <hr/>
-            <form id="${el}-form" action="${url.context}/service/components/profile/totp-settings" method="post">
-                <#if result.secret!="">
-                    <div class="row">
-                        <div class="buttons">
-                            <button id="${el}-button-generate-new-token" name="generate-new-token" value="generate-new-token">${msg("button.totp-generate-new-token")}</button>
-                            <button id="${el}-button-clear-token" name="clear-token" value="clear-token">${msg("button.totp-clear-token")}</button>
+            <#if activeUserProfile>
+                <form id="${el}-form" action="${url.context}/service/components/profile/totp-settings" method="post">
+                    <#if result.secret!="">
+                        <div class="row">
+                            <div class="buttons">
+                                <button id="${el}-button-generate-new-token" name="generate-new-token" value="generate-new-token">${msg("button.totp-generate-new-token")}</button>
+                                <button id="${el}-button-clear-token" name="clear-token" value="clear-token">${msg("button.totp-clear-token")}</button>
+                            </div>
                         </div>
-                    </div>
-                <#else>
-                    <div class="row">
-                        <div class="buttons">
-                            <button id="${el}-button-activate" name="activate" value="activate">${msg("button.totp-activate")}</button>
+                    <#else>
+                        <div class="row">
+                            <div class="buttons">
+                                <button id="${el}-button-activate" name="activate" value="activate">${msg("button.totp-activate")}</button>
+                            </div>
                         </div>
-                    </div>
-                </#if>
-            </form>
+                    </#if>
+                </form>
+            </#if>
         </div>
     </@>
 </@>
