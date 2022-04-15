@@ -82,7 +82,7 @@ function main()
       }
 
        // Add TOTP Settings link
-       if (user.isAdmin )addLink("totp-settings-link", "totp-settings", "link.totp-settings");
+       if (user.isAdmin) addLink("totp-settings-link", "totp-settings", "link.totp-settings");
 
    }
 }

@@ -18,9 +18,14 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
+import org.alfresco.repo.security.authentication.AuthenticationUtil;
+import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.alfresco.service.cmr.security.AuthorityService;
 import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
+import org.springframework.extensions.webscripts.WebScriptException;
+import org.springframework.extensions.webscripts.WebScriptRequest;
 
 public class TotpWebScript extends DeclarativeWebScript {
 
@@ -39,6 +44,24 @@ public class TotpWebScript extends DeclarativeWebScript {
      */
     public void setAuthorityService(AuthorityService authorityService) {
         this.authorityService = authorityService;
+    }
+
+    protected String validateUser(WebScriptRequest req) {
+        String user = req.getParameter("user");
+        if (user == null) {
+            user = AuthenticationUtil.getFullyAuthenticatedUser();
+        } else {
+            try {
+                new UserNameConstraint().evaluate(user);
+                if (!authorityService.hasAdminAuthority() &&
+                        !user.equals(AuthenticationUtil.getFullyAuthenticatedUser())) {
+                    throw new WebScriptException("Only admin can read or modify other user's TOTP secret.");
+                }
+            } catch (ConstraintException e) {
+                throw new WebScriptException(e.getMessage(), e);
+            }
+        }
+        return user;
     }
 
 }

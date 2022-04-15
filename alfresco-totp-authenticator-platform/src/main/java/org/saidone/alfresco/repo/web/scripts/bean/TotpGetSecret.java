@@ -18,12 +18,8 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
-import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
-import org.alfresco.repo.security.authentication.AuthenticationUtil;
-import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
-import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
 import java.util.HashMap;
@@ -36,21 +32,7 @@ public class TotpGetSecret extends TotpWebScript {
 
         Map<String, Object> model = new HashMap<>();
 
-        String user = req.getParameter("user");
-
-        if (user == null) {
-            user = AuthenticationUtil.getFullyAuthenticatedUser();
-        } else {
-            try {
-                new UserNameConstraint().evaluate(user);
-                if (!authorityService.hasAdminAuthority() &&
-                        !user.equals(AuthenticationUtil.getFullyAuthenticatedUser())) {
-                    throw new WebScriptException("Only admin can read other user's TOTP secret.");
-                }
-            } catch (ConstraintException e) {
-                throw new WebScriptException(e.getMessage(), e);
-            }
-        }
+        String user = validateUser(req);
 
         model.put("secret", totpService.getSecret(user));
         model.put("dataUri", totpService.getDataUri(user));
