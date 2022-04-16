@@ -27,7 +27,8 @@
         <docker.acs.image>alfresco/alfresco-content-repository-community</docker.acs.image>
         <docker.share.image>alfresco/alfresco-share</docker.share.image>
 
-        <keystore.settings>-Dencryption.keystore.type=JCEKS
+        <keystore.settings>
+            -Dencryption.keystore.type=JCEKS
             -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding
             -Dencryption.keyAlgorithm=AES
             -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
@@ -53,7 +54,7 @@
 
     <!-- Libs used in Unit and Integration tests -->
     <!-- IMPORTANT - Test dependencies need to be here in the top parent POM as
-                     the Alfresco Maven IT Mojo runs as part of the parent project ... -->
+         the Alfresco Maven IT Mojo runs as part of the parent project ... -->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -129,7 +130,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
+            <version>1.18.22</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
@@ -138,10 +139,10 @@
         <dependencies>
             <!-- This will import the dependencyManagement for all artifacts in the selected Alfresco platform.
                  NOTE: You still need to define dependencies in your POM, but you can omit version as
-                       it's enforced by this dependencyManagement.
+                 it's enforced by this dependencyManagement.
                  NOTE: It defaults to the latest version this SDK pom has been tested with,
-                       but alfresco version can/should be overridden in your project's pom
-            -->
+                 but alfresco version can/should be overridden in your project's pom
+              -->
             <dependency>
                 <groupId>${alfresco.groupId}</groupId>
                 <artifactId>${alfresco.bomDependencyArtifactId}</artifactId>
@@ -155,12 +156,12 @@
     <build>
         <plugins>
             <!--
-                    Build an AMP if 3rd party libs are needed by the extensions
-                    JARs are the default artifact produced in your modules, if you want to build an amp for each module
-                    you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
-                    the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
-                    module.
-                -->
+                Build an AMP if 3rd party libs are needed by the extensions
+                JARs are the default artifact produced in your modules, if you want to build an amp for each module
+                you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
+                the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
+                module.
+              -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -514,7 +515,7 @@
 
     <!--
         Alfresco Maven Repositories
-        -->
+      -->
     <repositories>
         <repository>
             <id>alfresco-public</id>
@@ -527,15 +528,6 @@
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
-        </repository>
-        <!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server in settings.xml -->
-        <repository>
-            <id>alfresco-private-repository</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
-        </repository>
-        <repository>
-            <id>alfresco-internal</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/internal</url>
         </repository>
     </repositories>
 
