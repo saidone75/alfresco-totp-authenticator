@@ -27,6 +27,7 @@ import dev.samstevens.totp.qr.QrGenerator;
 import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
+import lombok.Setter;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -39,35 +40,18 @@ import org.apache.commons.logging.LogFactory;
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
 public class TotpService {
+
     private static final Log logger = LogFactory.getLog(TotpService.class);
-    private PersonService personService;
-    private NodeService nodeService;
-    private String issuer;
+    @Setter
+    private static PersonService personService;
+    @Setter
+    private static NodeService nodeService;
+    @Setter
+    private static String issuer;
 
     public static final QName totpSecretQname = QName.createQName("org.saidone", "totpsecret");
 
-    /**
-     * @param personService PersonService
-     */
-    public void setPersonService(PersonService personService) {
-        this.personService = personService;
-    }
-
-    /**
-     * @param nodeService NodeService
-     */
-    public void setNodeService(NodeService nodeService) {
-        this.nodeService = nodeService;
-    }
-
-    /**
-     * @param issuer String
-     */
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
-    }
-
-    public void authorizeToken(String username, String token) {
+    public static void authorizeToken(String username, String token) {
         try {
             AuthenticationUtil.runAs(
                     (AuthenticationUtil.RunAsWork<String>) () -> {
@@ -89,14 +73,14 @@ public class TotpService {
         }
     }
 
-    public void generateSecret(String user) {
+    public static void generateSecret(String user) {
         nodeService.setProperty(
                 personService.getPerson(user),
                 totpSecretQname,
                 new DefaultSecretGenerator().generate());
     }
 
-    public void setSecret(String user, String secret) {
+    public static void setSecret(String user, String secret) {
         NodeRef userNodeRef = personService.getPerson(user);
         if ("".equals(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
@@ -105,14 +89,14 @@ public class TotpService {
         }
     }
 
-    public String getSecret(String user) {
+    public static String getSecret(String user) {
         return (String) nodeService.getProperty(
                 personService.getPerson(user),
                 totpSecretQname);
     }
 
-    public String getDataUri(String user) {
-        String secret = this.getSecret(user);
+    public static String getDataUri(String user) {
+        String secret = getSecret(user);
         String dataUri;
         if (null == secret) {
             dataUri = null;
@@ -138,7 +122,7 @@ public class TotpService {
         return dataUri;
     }
 
-    public void init() {
+    public static void init() {
         logger.info("Starting " + TotpService.class.getName());
     }
 }
