@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021 Saidone
+ * Copyright (C) 2021-2022 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,15 +22,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.junit.Assert;
 
-public class TotpAssert extends Assert {
+public final class TotpAssert extends Assert {
 
-    protected static void assertStandardJsonResponse(String jsonResponse) {
+    static void assertStandardJsonResponse(String jsonResponse) {
         Response response = parseJsonResponse(jsonResponse);
         assertTrue("Secret length mismatch", (("".equals(response.secret)) || response.secret.matches("^[A-Z0-9]{32}$")));
         assertNotNull("Image data is null", response.dataUri);
     }
 
-    protected static void assertSecretMatches(String secret, String jsonResponse) {
+    static void assertSecretMatches(String secret, String jsonResponse) {
         Response response = parseJsonResponse(jsonResponse);
         assertEquals(secret, response.secret);
     }

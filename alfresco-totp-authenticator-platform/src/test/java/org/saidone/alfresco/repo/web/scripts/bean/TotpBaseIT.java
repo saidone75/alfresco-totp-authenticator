@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021 Saidone
+ * Copyright (C) 2021-2022 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,7 +31,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class TotpBaseIT {
 
