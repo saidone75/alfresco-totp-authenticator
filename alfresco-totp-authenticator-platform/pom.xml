@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.saidone</groupId>
@@ -34,7 +34,8 @@
             -Dmetadata-keystore.password=mp6yc0UD9e
             -Dmetadata-keystore.aliases=metadata
             -Dmetadata-keystore.metadata.password=oKIWzVdEdA
-            -Dmetadata-keystore.metadata.algorithm=AES</keystore.settings>
+            -Dmetadata-keystore.metadata.algorithm=AES
+        </keystore.settings>
 
         <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
         <jrebel.version>1.1.8</jrebel.version>
@@ -160,7 +161,6 @@
                     the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
                     module.
                 -->
-            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -186,7 +186,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
 
             <!-- Filter the test resource files in the AIO parent project, and do property substitutions.
                  We need this config so this is done before the Alfresco Maven Plugin 'run' is executed. -->
