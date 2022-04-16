@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.Setter;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.security.AuthenticationService;
@@ -42,30 +43,10 @@ import java.util.Map;
  */
 public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost {
     // dependencies
+    @Setter
     private AuthenticationService authenticationService;
-    private TotpService totpService;
+    @Setter
     protected EventPublisher eventPublisher;
-
-    /**
-     * @param authenticationService AuthenticationService
-     */
-    public void setAuthenticationService(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
-
-    /**
-     * @param totpService TotpService
-     */
-    public void setTotpService(TotpService totpService) {
-        this.totpService = totpService;
-    }
-
-    /**
-     * @param eventPublisher EventPublisher
-     */
-    public void setEventPublisher(EventPublisher eventPublisher) {
-        this.eventPublisher = eventPublisher;
-    }
 
     /* (non-Javadoc)
      * @see org.alfresco.web.scripts.DeclarativeWebScript#executeImpl(org.alfresco.web.scripts.WebScriptRequest, org.alfresco.web.scripts.WebScriptResponse)
@@ -105,18 +86,18 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost 
                 return null;
             }
         } catch (JSONException jErr) {
-            throw (WebScriptException) new WebScriptException(Status.STATUS_BAD_REQUEST,
-                    "Unable to parse JSON POST body: " + jErr.getMessage()).initCause(jErr);
+            throw new WebScriptException(Status.STATUS_BAD_REQUEST,
+                    "Unable to parse JSON POST body: " + jErr.getMessage(), jErr);
         } catch (IOException ioErr) {
-            throw (WebScriptException) new WebScriptException(Status.STATUS_INTERNAL_SERVER_ERROR,
-                    "Unable to retrieve POST body: " + ioErr.getMessage()).initCause(ioErr);
+            throw new WebScriptException(Status.STATUS_INTERNAL_SERVER_ERROR,
+                    "Unable to retrieve POST body: " + ioErr.getMessage(), ioErr);
         }
     }
 
     protected Map<String, Object> login(final String username, String password, String token) {
         try {
             // check totp
-            totpService.authorizeToken(username, token);
+            TotpService.authorizeToken(username, token);
 
             // get ticket
             authenticationService.authenticate(username, password.toCharArray());
@@ -134,7 +115,7 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost 
 
             return model;
         } catch (AuthenticationException e) {
-            throw (WebScriptException) new WebScriptException(HttpServletResponse.SC_FORBIDDEN, "Login failed").initCause(e);
+            throw new WebScriptException(HttpServletResponse.SC_FORBIDDEN, "Login failed", e);
         } finally {
             AuthenticationUtil.clearCurrentSecurityContext();
         }

@@ -9,28 +9,24 @@
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpLoginPost"
           parent="webscript">
         <property name="authenticationService" ref="AuthenticationService"/>
-        <property name="totpService" ref="totpService"/>
         <property name="eventPublisher" ref="eventPublisher"/>
     </bean>
 
     <bean id="webscript.org.saidone.repository.setsecret.get"
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpSetSecret"
           parent="webscript">
-        <property name="totpService" ref="totpService"/>
         <property name="authorityService" ref="authorityService"/>
     </bean>
 
     <bean id="webscript.org.saidone.repository.getsecret.get"
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpGetSecret"
           parent="webscript">
-        <property name="totpService" ref="totpService"/>
         <property name="authorityService" ref="authorityService"/>
     </bean>
 
     <bean id="webscript.org.saidone.repository.gensecret.get"
           class="org.saidone.alfresco.repo.web.scripts.bean.TotpGenSecret"
           parent="webscript">
-        <property name="totpService" ref="totpService"/>
         <property name="authorityService" ref="authorityService"/>
     </bean>
 

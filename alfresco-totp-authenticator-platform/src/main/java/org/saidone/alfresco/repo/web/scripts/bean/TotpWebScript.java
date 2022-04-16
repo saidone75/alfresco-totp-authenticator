@@ -18,33 +18,19 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.Setter;
 import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.alfresco.service.cmr.security.AuthorityService;
-import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
 public class TotpWebScript extends DeclarativeWebScript {
 
-    protected TotpService totpService;
+    @Setter
     protected AuthorityService authorityService;
-
-    /**
-     * @param totpService TotpService
-     */
-    public void setTotpService(TotpService totpService) {
-        this.totpService = totpService;
-    }
-
-    /**
-     * @param authorityService AuthorityService
-     */
-    public void setAuthorityService(AuthorityService authorityService) {
-        this.authorityService = authorityService;
-    }
 
     protected String validateUser(WebScriptRequest req) {
         String user = req.getParameter("user");

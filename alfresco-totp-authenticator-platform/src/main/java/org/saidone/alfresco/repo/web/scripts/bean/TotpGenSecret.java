@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
@@ -34,10 +35,10 @@ public class TotpGenSecret extends TotpWebScript {
 
         String user = validateUser(req);
 
-        totpService.generateSecret(user);
+        TotpService.generateSecret(user);
 
-        model.put("secret", totpService.getSecret(user));
-        model.put("dataUri", totpService.getDataUri(user));
+        model.put("secret", TotpService.getSecret(user));
+        model.put("dataUri", TotpService.getDataUri(user));
 
         return model;
     }
