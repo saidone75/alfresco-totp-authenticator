@@ -39,7 +39,7 @@ import org.apache.commons.logging.LogFactory;
 
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
-public class TotpService {
+public final class TotpService {
 
     private static final Log logger = LogFactory.getLog(TotpService.class);
     @Setter
@@ -50,6 +50,8 @@ public class TotpService {
     private static String issuer;
 
     public static final QName totpSecretQname = QName.createQName("org.saidone", "totpsecret");
+
+    private TotpService() {}
 
     public static void authorizeToken(String username, String token) {
         try {
