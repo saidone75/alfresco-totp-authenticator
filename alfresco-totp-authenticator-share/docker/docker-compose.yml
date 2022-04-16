@@ -1,7 +1,7 @@
 version: '3.4'
 services:
-  alfresco-totp-authenticator-share-share:
-    image: alfresco-share-alfresco-totp-authenticator-share:development
+  share:
+    image: alfresco-share-alfresco-totp-authenticator:development
     build:
       dockerfile: ./Dockerfile
       context: ../../../target

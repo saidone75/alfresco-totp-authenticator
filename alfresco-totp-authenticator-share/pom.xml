@@ -11,24 +11,38 @@
 
     <properties>
         <!-- Alfresco Maven Plugin version to use -->
-        <alfresco.sdk.version>4.1.0</alfresco.sdk.version>
+        <alfresco.sdk.version>4.4.0</alfresco.sdk.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Properties used in dependency declarations, you don't need to change these -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
-        <alfresco.platform.version>7.2.0.1</alfresco.platform.version>
-        <alfresco.share.version>23.1.0.13</alfresco.share.version>
+        <alfresco.platform.version>7.2.0</alfresco.platform.version>
+        <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
+        <alfresco.share.version>14.96</alfresco.share.version>
+        <alfresco.share.docker.version>7.2.0</alfresco.share.docker.version>
 
         <!-- Docker images -->
         <docker.acs.image>alfresco/alfresco-content-repository-community</docker.acs.image>
         <docker.share.image>alfresco/alfresco-share</docker.share.image>
 
+        <keystore.settings>-Dencryption.keystore.type=JCEKS
+            -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding
+            -Dencryption.keyAlgorithm=AES
+            -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+            -Dmetadata-keystore.password=mp6yc0UD9e
+            -Dmetadata-keystore.aliases=metadata
+            -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+            -Dmetadata-keystore.metadata.algorithm=AES</keystore.settings>
+
+        <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
+        <jrebel.version>1.1.8</jrebel.version>
+
         <!-- Environment configuration properties -->
         <share.port>8180</share.port>
         <share.debug.port>9898</share.debug.port>
-        <acs.host>alfresco-totp-authenticator-platform-acs</acs.host>
+        <acs.host>alfresco</acs.host>
         <acs.port>8080</acs.port>
         <postgres.port>5555</postgres.port>
 
@@ -89,29 +103,20 @@
                 <classifier>classes</classifier>
                 <scope>provided</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
-                <configuration>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--
+                                Build an AMP if 3rd party libs are needed by the extensions
+                                JARs are the default artifact produced in your modules, if you want to build an amp for each module
+                                you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
+                                the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
+                                module.
+                            -->
+            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -137,6 +142,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            -->
 
             <!-- Filter the test resource files in the AIO parent project, and do property substitutions.
                  We need this config so this is done before the Alfresco Maven Plugin 'run' is executed. -->
@@ -371,6 +377,15 @@
                 <enabled>true</enabled>
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
+        </repository>
+        <!-- Alfresco Enterprise Edition Artifacts, put username/pwd for server in settings.xml -->
+        <repository>
+            <id>alfresco-private-repository</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/private</url>
+        </repository>
+        <repository>
+            <id>alfresco-internal</id>
+            <url>https://artifacts.alfresco.com/nexus/content/groups/internal</url>
         </repository>
     </repositories>
 

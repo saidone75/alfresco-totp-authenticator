@@ -1,4 +1,4 @@
-FROM ${docker.share.image}:${alfresco.share.version}
+FROM ${docker.share.image}:${alfresco.share.docker.version}
 
 ARG TOMCAT_DIR=/usr/local/tomcat
 
@@ -14,6 +14,3 @@ COPY share-config-custom.xml $TOMCAT_DIR/shared/classes/alfresco/web-extension
 
 COPY log4j.properties $TOMCAT_DIR/webapps/share/WEB-INF/classes
 COPY hotswap-agent.properties $TOMCAT_DIR/webapps/share/WEB-INF/classes
-
-# Patch for https://github.com/Alfresco/acs-community-packaging/issues/367
-RUN sed -i 's/\(<show-authorization-status>\)true\(<\/show-authorization-status\)/\1false\2/' $TOMCAT_DIR/webapps/share/WEB-INF/classes/alfresco/share-config.xml
