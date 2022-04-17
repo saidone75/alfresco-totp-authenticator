@@ -38,9 +38,6 @@
             -Dmetadata-keystore.metadata.algorithm=AES
         </keystore.settings>
 
-        <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
-        <jrebel.version>1.1.8</jrebel.version>
-
         <!-- Environment configuration properties -->
         <share.port>8180</share.port>
         <share.debug.port>9898</share.debug.port>

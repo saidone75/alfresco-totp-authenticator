@@ -38,9 +38,6 @@
             -Dmetadata-keystore.metadata.algorithm=AES
         </keystore.settings>
 
-        <!-- JRebel Hot reloading of classpath stuff and web resource stuff -->
-        <jrebel.version>1.1.8</jrebel.version>
-
         <!-- Environment configuration properties -->
         <share.port>8180</share.port>
         <acs.host>alfresco</acs.host>
@@ -86,7 +83,6 @@
             <artifactId>alfresco-remote-api</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>share-po</artifactId>
@@ -107,7 +103,6 @@
             <version>7.134.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>dev.samstevens.totp</groupId>
             <artifactId>totp</artifactId>
@@ -131,7 +126,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
