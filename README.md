@@ -10,7 +10,7 @@ Time-based One-Time Password two factor authentication for Alfresco
 
 Distributed for free without any warranty. Use at your own risk.
 
-Tested with **Alfresco Community Edition 7.2**.
+Tested with **Alfresco Community Edition 7.2** but should work with any version from 6.2 on.
 
 [![Alfresco TOTP authenticator](totp-login.gif)](https://vimeo.com/507443676)
 
