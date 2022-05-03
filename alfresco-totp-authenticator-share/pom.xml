@@ -20,7 +20,7 @@
         <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
         <alfresco.platform.version>7.2.0</alfresco.platform.version>
         <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
-        <alfresco.share.version>23.1.0.19</alfresco.share.version>
+        <alfresco.share.version>23.1.0.20</alfresco.share.version>
         <alfresco.share.docker.version>7.2.0</alfresco.share.docker.version>
 
         <!-- Docker images -->
@@ -146,7 +146,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.2.0</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <nonFilteredFileExtensions> <!-- jpg, jpeg, gif, bmp and png are added automatically -->
