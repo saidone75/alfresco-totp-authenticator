@@ -20,6 +20,7 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.AllArgsConstructor;
 import org.junit.Assert;
 
 public final class TotpAssert extends Assert {
@@ -43,14 +44,10 @@ public final class TotpAssert extends Assert {
         return new Response(secret, dataUri);
     }
 
+    @AllArgsConstructor
     private static class Response {
         protected String secret;
         protected String dataUri;
-
-        Response(String secret, String dataUri) {
-            this.secret = secret;
-            this.dataUri = dataUri;
-        }
     }
 
 }

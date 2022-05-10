@@ -28,20 +28,19 @@ import dev.samstevens.totp.qr.ZxingPngQrGenerator;
 import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.security.PersonService;
 import org.alfresco.service.namespace.QName;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
+@Slf4j
 public final class TotpService {
 
-    private static final Log logger = LogFactory.getLog(TotpService.class);
     @Setter
     private static PersonService personService;
     @Setter
@@ -70,7 +69,7 @@ public final class TotpService {
                         return null;
                     }, AuthenticationUtil.getSystemUserName());
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             throw e;
         }
     }
@@ -116,8 +115,8 @@ public final class TotpService {
             try {
                 imageData = generator.generate(data);
             } catch (QrGenerationException e) {
-                logger.error(e.getMessage());
-                e.printStackTrace();
+                log.error(e.getMessage());
+                if (log.isTraceEnabled()) e.printStackTrace();
             }
             dataUri = getDataUriForImage(imageData, generator.getImageMimeType());
         }
@@ -125,6 +124,6 @@ public final class TotpService {
     }
 
     public static void init() {
-        logger.info("Starting " + TotpService.class.getName());
+        log.info("Starting " + TotpService.class.getName());
     }
 }
