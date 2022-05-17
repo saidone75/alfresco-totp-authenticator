@@ -29,6 +29,7 @@ import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.repository.NodeRef;
@@ -45,6 +46,8 @@ public final class TotpService {
     private static PersonService personService;
     @Setter
     private static NodeService nodeService;
+    @Setter
+    private static MessageService messageService;
     @Setter
     private static String issuer;
 
@@ -64,7 +67,7 @@ public final class TotpService {
                                         new DefaultCodeGenerator(),
                                         new SystemTimeProvider())
                                         .isValidCode(secret, token)) {
-                            throw new AuthenticationException("Invalid token");
+                            throw new AuthenticationException(messageService.getMessage("totpauthenticator.invalid_token"));
                         }
                         return null;
                     }, AuthenticationUtil.getSystemUserName());

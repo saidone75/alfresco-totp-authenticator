@@ -20,6 +20,7 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 
 import lombok.Setter;
 import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
+import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.alfresco.service.cmr.security.AuthorityService;
@@ -31,6 +32,8 @@ public class TotpWebScript extends DeclarativeWebScript {
 
     @Setter
     protected AuthorityService authorityService;
+    @Setter
+    protected MessageService messageService;
 
     protected String validateUser(WebScriptRequest req) {
         String user = req.getParameter("user");
@@ -41,7 +44,7 @@ public class TotpWebScript extends DeclarativeWebScript {
                 new UserNameConstraint().evaluate(user);
                 if (!authorityService.hasAdminAuthority() &&
                         !user.equals(AuthenticationUtil.getFullyAuthenticatedUser())) {
-                    throw new WebScriptException("Only admin can read or modify other user's TOTP secret.");
+                    throw new WebScriptException(messageService.getMessage("totpauthenticator.admin_only"));
                 }
             } catch (ConstraintException e) {
                 throw new WebScriptException(e.getMessage(), e);
