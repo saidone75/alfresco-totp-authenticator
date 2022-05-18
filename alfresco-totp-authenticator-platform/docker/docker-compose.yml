@@ -43,6 +43,11 @@ services:
             -Ddsync.service.uris=http://localhost:9090/alfresco
             -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
             "
+    ports:
+      - "8080:8080"
+    volumes:
+      - alfresco-totp-authenticator-platform-acs-volume:/usr/local/tomcat/alf_data
+      - ../../../../alfresco-totp-authenticator-platform/target/classes:/usr/local/tomcat/hotswap-agent/alfresco-totp-authenticator-platform/target/classes
   postgres:
     image: postgres:13.3
     mem_limit: 512m
@@ -53,6 +58,8 @@ services:
     command: postgres -c max_connections=300 -c log_min_messages=LOG
     ports:
       - "5432:5432"
+    volumes:
+      - alfresco-totp-authenticator-platform-db-volume:/var/lib/postgresql/data
   solr6:
     image: alfresco/alfresco-search-services:2.0.3
     mem_limit: 2g
@@ -73,6 +80,9 @@ services:
          "
     ports:
       - "8083:8983" # Browser port
+    volumes:
+      - alfresco-totp-authenticator-platform-ass-volume:/opt/alfresco-search-services/contentstore
+      - alfresco-totp-authenticator-platform-ass-volume:/opt/alfresco-search-services/data
   activemq:
     image: alfresco/alfresco-activemq:5.16.1
     ports:
@@ -80,9 +90,10 @@ services:
       - 5672:5672 # AMQP
       - 61616:61616 # OpenWire
       - 61613:61613 # STOMP
-
 volumes:
-  shared-file-store-volume:
-    driver_opts:
-      type: tmpfs
-      device: tmpfs
+  alfresco-totp-authenticator-platform-acs-volume:
+    external: true
+  alfresco-totp-authenticator-platform-db-volume:
+    external: true
+  alfresco-totp-authenticator-platform-ass-volume:
+    external: true
