@@ -50,6 +50,12 @@ public final class TotpService {
     private static MessageService messageService;
     @Setter
     private static String issuer;
+    @Setter
+    private static String algorithm;
+    @Setter
+    private static int digits;
+    @Setter
+    private static int period;
 
     public static final QName totpSecretQname = QName.createQName("org.saidone", "totpsecret");
 
@@ -109,9 +115,9 @@ public final class TotpService {
                     .label(user)
                     .secret(secret)
                     .issuer(issuer)
-                    .algorithm(HashingAlgorithm.SHA1)
-                    .digits(6)
-                    .period(30)
+                    .algorithm(HashingAlgorithm.valueOf(algorithm))
+                    .digits(digits)
+                    .period(period)
                     .build();
             QrGenerator generator = new ZxingPngQrGenerator();
             byte[] imageData = null;
@@ -129,4 +135,5 @@ public final class TotpService {
     public static void init() {
         log.info("Starting " + TotpService.class.getName());
     }
+
 }

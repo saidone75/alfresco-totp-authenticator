@@ -10,6 +10,9 @@
         <property name="nodeService" ref="NodeService"/>
         <property name="messageService" ref="MessageService"/>
         <property name="issuer" value="${totp.qrdata.issuer}"/>
+        <property name="algorithm" value="${totp.qrdata.algorithm}"/>
+        <property name="digits" value="${totp.qrdata.digits}"/>
+        <property name="period" value="${totp.qrdata.period}"/>
     </bean>
 
     <bean id='actionResourceBundles' class='org.alfresco.i18n.ResourceBundleBootstrapComponent'>
