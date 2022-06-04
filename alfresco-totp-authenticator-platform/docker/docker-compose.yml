@@ -42,8 +42,10 @@ services:
             -Dcsrf.filter.enabled=false
             -Ddsync.service.uris=http://localhost:9090/alfresco
             -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+            -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000
             "
     ports:
+      - "8000:8000"
       - "8080:8080"
     volumes:
       - alfresco-totp-authenticator-platform-acs-volume:/usr/local/tomcat/alf_data
