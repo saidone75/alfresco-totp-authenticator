@@ -370,7 +370,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M6</version>
+                <version>3.0.0-M7</version>
                 <configuration>
                     <systemPropertyVariables>
                         <acs.endpoint.path>${test.acs.endpoint.path}</acs.endpoint.path>
@@ -396,7 +396,7 @@
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit47</artifactId>
-                        <version>3.0.0-M6</version>
+                        <version>3.0.0-M7</version>
                     </dependency>
                 </dependencies>
             </plugin>
