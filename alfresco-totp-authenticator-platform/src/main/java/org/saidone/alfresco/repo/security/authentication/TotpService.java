@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.security.authentication;
 
+import com.rometools.utils.Strings;
 import dev.samstevens.totp.code.DefaultCodeGenerator;
 import dev.samstevens.totp.code.DefaultCodeVerifier;
 import dev.samstevens.totp.code.HashingAlgorithm;
@@ -92,7 +93,7 @@ public final class TotpService {
 
     public static void setSecret(String user, String secret) {
         NodeRef userNodeRef = personService.getPerson(user);
-        if ("".equals(secret)) {
+        if (Strings.isBlank(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
             nodeService.setProperty(userNodeRef, totpSecretQname, secret);
@@ -133,7 +134,7 @@ public final class TotpService {
     }
 
     public static void init() {
-        log.info("Starting " + TotpService.class.getName());
+        log.info("Starting {}", TotpService.class.getName());
     }
 
 }
