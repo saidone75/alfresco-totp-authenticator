@@ -31,9 +31,9 @@ public class TotpGenSecret extends TotpWebScript {
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
-        Map<String, Object> model = new HashMap<>();
+        var model = new HashMap<String, Object>();
 
-        String user = validateUser(req);
+        var user = validateUser(req);
 
         TotpService.generateSecret(user);
 

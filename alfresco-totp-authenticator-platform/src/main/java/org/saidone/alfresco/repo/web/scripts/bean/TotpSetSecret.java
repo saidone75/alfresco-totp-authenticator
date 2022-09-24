@@ -35,11 +35,11 @@ public class TotpSetSecret extends TotpWebScript {
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
-        Map<String, Object> model = new HashMap<>();
+        var model = new HashMap<String, Object>();
 
-        String user = validateUser(req);
+        var user = validateUser(req);
 
-        String secret = Strings.nullToEmpty(req.getParameter("secret")).toUpperCase(Locale.ROOT);
+        var secret = Strings.nullToEmpty(req.getParameter("secret")).toUpperCase(Locale.ROOT);
         if (secret.isEmpty() || secret.matches("^[A-Z0-9]{32}$")) {
             TotpService.setSecret(user, secret);
         } else {

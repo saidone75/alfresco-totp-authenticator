@@ -66,7 +66,7 @@ public final class TotpService {
         try {
             AuthenticationUtil.runAs(
                     (AuthenticationUtil.RunAsWork<String>) () -> {
-                        String secret = (String) nodeService.getProperty(
+                        var secret = (String) nodeService.getProperty(
                                 personService.getPerson(username),
                                 totpSecretQname);
                         if (secret != null &&
@@ -92,7 +92,7 @@ public final class TotpService {
     }
 
     public static void setSecret(String user, String secret) {
-        NodeRef userNodeRef = personService.getPerson(user);
+        var userNodeRef = personService.getPerson(user);
         if (Strings.isBlank(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
@@ -107,12 +107,12 @@ public final class TotpService {
     }
 
     public static String getDataUri(String user) {
-        String secret = getSecret(user);
+        var secret = getSecret(user);
         String dataUri;
         if (null == secret) {
             dataUri = null;
         } else {
-            QrData data = new QrData.Builder()
+            var data = new QrData.Builder()
                     .label(user)
                     .secret(secret)
                     .issuer(issuer)
@@ -120,7 +120,7 @@ public final class TotpService {
                     .digits(digits)
                     .period(period)
                     .build();
-            QrGenerator generator = new ZxingPngQrGenerator();
+            var generator = new ZxingPngQrGenerator();
             byte[] imageData = null;
             try {
                 imageData = generator.generate(data);

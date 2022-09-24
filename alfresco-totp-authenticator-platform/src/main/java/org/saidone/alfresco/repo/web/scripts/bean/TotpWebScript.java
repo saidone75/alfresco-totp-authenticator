@@ -36,7 +36,7 @@ public class TotpWebScript extends DeclarativeWebScript {
     protected MessageService messageService;
 
     protected String validateUser(WebScriptRequest req) {
-        String user = req.getParameter("user");
+        var user = req.getParameter("user");
         if (user == null) {
             user = AuthenticationUtil.getFullyAuthenticatedUser();
         } else {
