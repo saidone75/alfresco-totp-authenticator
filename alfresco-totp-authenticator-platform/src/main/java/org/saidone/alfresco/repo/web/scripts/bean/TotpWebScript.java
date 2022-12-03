@@ -24,6 +24,7 @@ import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
 import org.alfresco.service.cmr.dictionary.ConstraintException;
 import org.alfresco.service.cmr.security.AuthorityService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
@@ -37,7 +38,7 @@ public class TotpWebScript extends DeclarativeWebScript {
 
     protected String validateUser(WebScriptRequest req) {
         var user = req.getParameter("user");
-        if (user == null) {
+        if (Strings.isBlank(user)) {
             user = AuthenticationUtil.getFullyAuthenticatedUser();
         } else {
             try {
