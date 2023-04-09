@@ -71,6 +71,6 @@ Stable [releases](https://github.com/saidone75/alfresco-totp-authenticator/relea
 Java CI successful workflows on [Actions](https://github.com/saidone75/alfresco-totp-authenticator/actions) will issue development artifacts.
 
 ## License
-Copyright (c) 2021-2022 Saidone
+Copyright (c) 2021-2023 Saidone
 
 Distributed under the GNU General Public License v3.0
