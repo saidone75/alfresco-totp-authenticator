@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-repository</artifactId>
-            <version>23.1.0.145</version>
+            <version>23.1.0.152</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
