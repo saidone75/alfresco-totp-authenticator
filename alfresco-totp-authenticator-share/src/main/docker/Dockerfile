@@ -2,6 +2,9 @@ FROM ${docker.share.image}:${alfresco.share.docker.version}
 
 ARG TOMCAT_DIR=/usr/local/tomcat
 
+# Disable resource caching
+RUN sed -i "s|<Context>|<Context>\n<Resources cachingAllowed=\"false\"/> |g" $TOMCAT_DIR/conf/context.xml
+
 # Copy Dockerfile to avoid an error if no JARs exist
 COPY Dockerfile extensions/*.jar $TOMCAT_DIR/webapps/share/WEB-INF/lib/
 
