@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Setter;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
@@ -32,7 +33,6 @@ import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
