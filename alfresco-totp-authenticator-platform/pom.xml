@@ -512,7 +512,6 @@
                 </plugins>
             </build>
         </profile>
-        <!--
         <profile>
             <id>java17</id>
             <activation>
@@ -531,7 +530,6 @@
                 </plugins>
             </build>
         </profile>
-        -->
     </profiles>
 
     <!--
