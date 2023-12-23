@@ -73,7 +73,7 @@ jobs:
 
       - run: |
           echo "Run, Build Application using script"
-          mvn clean package -Pjava11
+          mvn clean package -Pjava17
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
