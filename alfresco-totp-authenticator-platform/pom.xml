@@ -148,7 +148,6 @@
                     the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
                     module.
                 -->
-            <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -174,7 +173,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
 
             <!-- Filter the test resource files in the AIO parent project, and do property substitutions.
                  We need this config so this is done before the Alfresco Maven Plugin 'run' is executed. -->
@@ -339,6 +337,7 @@
                             <outputDirectory>${project.build.directory}/extensions</outputDirectory>
                             <includeScope>runtime</includeScope>
                             <!-- IMPORTANT: if using amp dependencies only, add <includeTypes>amp</includeTypes> -->
+                            <includeTypes>amp</includeTypes>
                         </configuration>
                     </execution>
                 </executions>
@@ -513,6 +512,7 @@
                 </plugins>
             </build>
         </profile>
+        <!--
         <profile>
             <id>java17</id>
             <activation>
@@ -531,6 +531,7 @@
                 </plugins>
             </build>
         </profile>
+        -->
     </profiles>
 
     <!--
