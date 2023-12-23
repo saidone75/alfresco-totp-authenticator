@@ -5,24 +5,24 @@
     <groupId>org.saidone</groupId>
     <artifactId>alfresco-totp-authenticator-share</artifactId>
     <version>2.1-SNAPSHOT</version>
-    <name>alfresco-totp-authenticator-share Share JAR Module</name>
-    <description>Share JAR Module (to be included in the share.war)</description>
+    <name>alfresco-totp-authenticator-share Share AMP Module</name>
+    <description>Share AMP Module</description>
     <packaging>jar</packaging>
 
     <properties>
         <!-- Alfresco Maven Plugin version to use -->
-        <alfresco.sdk.version>4.4.0</alfresco.sdk.version>
+        <alfresco.sdk.version>4.7.0</alfresco.sdk.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Properties used in dependency declarations, you don't need to change these -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
-        <alfresco.platform.version>7.4.1.1</alfresco.platform.version>
+        <alfresco.platform.version>23.1.0</alfresco.platform.version>
         <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
         <!-- 187 working -->
-        <alfresco.share.version>23.1.0.187</alfresco.share.version>
-        <alfresco.share.docker.version>7.4.0.1</alfresco.share.docker.version>
+        <alfresco.share.version>23.2.0.19</alfresco.share.version>
+        <alfresco.share.docker.version>23.1.1</alfresco.share.docker.version>
 
         <!-- Docker images -->
         <docker.acs.image>alfresco/alfresco-content-repository-community</docker.acs.image>
@@ -58,9 +58,9 @@
             <classifier>classes</classifier>
         </dependency>
         <dependency>
-            <groupId>org.alfresco</groupId>
-            <artifactId>share-po</artifactId>
-            <version>6.2.0.1</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -103,19 +103,19 @@
                 <classifier>classes</classifier>
                 <scope>provided</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
     <build>
         <plugins>
             <!--
-                Build an AMP if 3rd party libs are needed by the extensions
-                JARs are the default artifact produced in your modules, if you want to build an amp for each module
-                you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
-                the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
-                module.
-              -->
+                                Build an AMP if 3rd party libs are needed by the extensions
+                                JARs are the default artifact produced in your modules, if you want to build an amp for each module
+                                you have to enable this plugin and inspect the src/main/assembly.xml file if you want to customize
+                                the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
+                                module.
+                            -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -138,6 +138,11 @@
                         <groupId>org.alfresco.maven.plugin</groupId>
                         <artifactId>alfresco-maven-plugin</artifactId>
                         <version>${alfresco.sdk.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>jakarta.servlet</groupId>
+                        <artifactId>jakarta.servlet-api</artifactId>
+                        <version>6.0.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -232,51 +237,65 @@
                 </executions>
             </plugin>
 
-            <!-- Compress JavaScript files and store as *-min.js -->
+            <!-- Compress JavaScript files and store as *.min.js -->
             <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>yuicompressor-maven-plugin</artifactId>
-                <version>1.5.1</version>
+                <groupId>com.github.blutorange</groupId>
+                <artifactId>closure-compiler-maven-plugin</artifactId>
+                <version>2.28.0</version>
                 <executions>
                     <!-- Compress the JS files under the assembly folder -->
                     <execution>
                         <id>compress-assembly</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>compress</goal>
+                            <goal>minify</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/assembly/web</sourceDirectory>
-                            <outputDirectory>${project.basedir}/src/main/assembly/web</outputDirectory>
+                            <baseSourceDir>${project.basedir}/src/main/assembly</baseSourceDir>
+                            <baseTargetDir>${project.basedir}/src/main/assembly</baseTargetDir>
+                            <sourceDir>web</sourceDir>
+                            <targetDir>web</targetDir>
+                            <skipMerge>true</skipMerge>
+                            <includes>
+                                <include>**/*.js</include>
+                            </includes>
                             <excludes>
                                 <exclude>**/webscripts/**</exclude>
                                 <exclude>**/site-webscripts/**</exclude>
                                 <exclude>**/META-INF/**</exclude>
                                 <exclude>**/*.lib.js</exclude>
                                 <exclude>**/*.css</exclude>
-                                <exclude>**/*-min.js</exclude>
-                                <exclude>**/*-min.css</exclude>
+                                <exclude>**/*.min.js</exclude>
+                                <exclude>**/*.min.css</exclude>
                             </excludes>
                             <force>true</force>
-                            <jswarn>false</jswarn>
                         </configuration>
                     </execution>
                     <!-- Compress the JS files under the resources folder -->
                     <execution>
                         <id>compress-resources</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>compress</goal>
+                            <goal>minify</goal>
                         </goals>
                         <configuration>
+                            <baseSourceDir>${project.basedir}/src/main</baseSourceDir>
+                            <baseTargetDir>${project.basedir}/src/main</baseTargetDir>
+                            <sourceDir>resources</sourceDir>
+                            <targetDir>resources</targetDir>
+                            <skipMerge>true</skipMerge>
+                            <includes>
+                                <include>**/*.js</include>
+                            </includes>
                             <excludes>
                                 <exclude>**/webscripts/**</exclude>
                                 <exclude>**/site-webscripts/**</exclude>
                                 <exclude>**/*.lib.js</exclude>
                                 <exclude>**/*.css</exclude>
-                                <exclude>**/*-min.js</exclude>
-                                <exclude>**/*-min.css</exclude>
+                                <exclude>**/*.min.js</exclude>
+                                <exclude>**/*.min.css</exclude>
                             </excludes>
                             <force>true</force>
-                            <jswarn>false</jswarn>
                         </configuration>
                     </execution>
                 </executions>
@@ -298,6 +317,7 @@
                             <outputDirectory>${project.build.directory}/extensions</outputDirectory>
                             <includeScope>runtime</includeScope>
                             <!-- IMPORTANT: if using amp dependencies only, add <includeTypes>amp</includeTypes> -->
+                            <includeTypes>amp</includeTypes>
                         </configuration>
                     </execution>
                 </executions>
@@ -343,7 +363,7 @@
         <profile>
             <id>java11</id>
             <activation>
-                <jdk>[11.0,)</jdk>
+                <jdk>[11.0,17)</jdk>
             </activation>
             <build>
                 <plugins>
@@ -353,6 +373,24 @@
                         <version>3.11.0</version>
                         <configuration>
                             <release>11</release>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>java17</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.11.0</version>
+                        <configuration>
+                            <release>17</release>
                         </configuration>
                     </plugin>
                 </plugins>
