@@ -5,8 +5,8 @@
     <groupId>org.saidone</groupId>
     <artifactId>alfresco-totp-authenticator-share</artifactId>
     <version>2.1-SNAPSHOT</version>
-    <name>alfresco-totp-authenticator-share Share JAR Module</name>
-    <description>Share JAR Module (to be included in the share.war)</description>
+    <name>alfresco-totp-authenticator-share Share AMP Module</name>
+    <description>Share AMP Module</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -21,8 +21,8 @@
         <alfresco.platform.version>23.1.0</alfresco.platform.version>
         <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
         <!-- 187 working -->
-        <alfresco.share.version>23.2.0.2</alfresco.share.version>
-        <alfresco.share.docker.version>7.4.0.1</alfresco.share.docker.version>
+        <alfresco.share.version>23.2.0.19</alfresco.share.version>
+        <alfresco.share.docker.version>23.1.1</alfresco.share.docker.version>
 
         <!-- Docker images -->
         <docker.acs.image>alfresco/alfresco-content-repository-community</docker.acs.image>
@@ -61,7 +61,7 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>6.0.0</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -103,7 +103,6 @@
                 <classifier>classes</classifier>
                 <scope>provided</scope>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -116,7 +115,7 @@
                                 the layout of your AMP. The end result is that Maven will produce both a JAR file and an AMP with your
                                 module.
                             -->
-            <!--
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -140,9 +139,13 @@
                         <artifactId>alfresco-maven-plugin</artifactId>
                         <version>${alfresco.sdk.version}</version>
                     </dependency>
+                    <dependency>
+                        <groupId>jakarta.servlet</groupId>
+                        <artifactId>jakarta.servlet-api</artifactId>
+                        <version>6.0.0</version>
+                    </dependency>
                 </dependencies>
             </plugin>
-            -->
 
             <!-- Filter the test resource files in the AIO parent project, and do property substitutions.
                  We need this config so this is done before the Alfresco Maven Plugin 'run' is executed. -->
@@ -314,6 +317,7 @@
                             <outputDirectory>${project.build.directory}/extensions</outputDirectory>
                             <includeScope>runtime</includeScope>
                             <!-- IMPORTANT: if using amp dependencies only, add <includeTypes>amp</includeTypes> -->
+                            <includeTypes>amp</includeTypes>
                         </configuration>
                     </execution>
                 </executions>

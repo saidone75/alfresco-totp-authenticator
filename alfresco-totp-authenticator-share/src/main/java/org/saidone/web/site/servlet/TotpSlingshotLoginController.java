@@ -1,16 +1,15 @@
 package org.saidone.web.site.servlet;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.saidone.web.site.TotpSlingshotUserFactory;
 import org.springframework.extensions.config.WebFrameworkConfigElement;
 import org.springframework.extensions.surf.UserFactory;
 import org.springframework.extensions.surf.mvc.AbstractLoginController;
 import org.springframework.extensions.surf.site.AuthenticationUtil;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class TotpSlingshotLoginController extends org.alfresco.web.site.servlet.SlingshotLoginController
 {

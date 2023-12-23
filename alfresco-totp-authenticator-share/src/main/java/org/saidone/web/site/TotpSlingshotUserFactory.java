@@ -1,11 +1,10 @@
 package org.saidone.web.site;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.extensions.surf.support.AlfrescoUserFactory;
 import org.springframework.extensions.webscripts.connector.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class TotpSlingshotUserFactory extends org.alfresco.web.site.SlingshotUserFactory
 {
