@@ -9,7 +9,7 @@ RUN sed -i "s|<Context>|<Context>\n<Resources cachingAllowed=\"false\"/> |g" $TO
 COPY Dockerfile extensions/*.jar $TOMCAT_DIR/webapps/share/WEB-INF/lib/
 
 # Copy Dockerfile to avoid an error if no AMPs exist
-COPY Dockerfile *.amp $TOMCAT_DIR/amps_share/
+COPY Dockerfile extensions/*.amp $TOMCAT_DIR/amps_share/
 RUN java -jar $TOMCAT_DIR/alfresco-mmt/alfresco-mmt*.jar install \
               $TOMCAT_DIR/amps_share $TOMCAT_DIR/webapps/share -directory -nobackup -force
 
