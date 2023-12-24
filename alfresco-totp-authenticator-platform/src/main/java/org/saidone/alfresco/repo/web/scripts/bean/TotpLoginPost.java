@@ -120,4 +120,5 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost 
             AuthenticationUtil.clearCurrentSecurityContext();
         }
     }
+
 }

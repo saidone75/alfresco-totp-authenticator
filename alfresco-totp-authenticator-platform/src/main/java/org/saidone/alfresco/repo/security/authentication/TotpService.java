@@ -75,7 +75,7 @@ public final class TotpService {
                             throw new AuthenticationException(messageService.getMessage("totpauthenticator.invalid_token"));
                         }
                         return null;
-                    }, AuthenticationUtil.getSystemUserName());
+                    }, AuthenticationUtil.getAdminUserName());
         } catch (Exception e) {
             log.error(e.getMessage());
             throw e;
@@ -124,7 +124,7 @@ public final class TotpService {
                 imageData = generator.generate(data);
             } catch (QrGenerationException e) {
                 log.error(e.getMessage());
-                if (log.isTraceEnabled()) e.printStackTrace();
+                log.trace(e.getMessage(), e);
             }
             dataUri = getDataUriForImage(imageData, generator.getImageMimeType());
         }

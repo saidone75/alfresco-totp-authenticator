@@ -40,4 +40,5 @@ public class TotpGetSecret extends TotpWebScript {
 
         return model;
     }
+
 }
