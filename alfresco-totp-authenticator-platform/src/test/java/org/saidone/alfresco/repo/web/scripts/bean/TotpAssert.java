@@ -26,21 +26,21 @@ import org.junit.Assert;
 public final class TotpAssert extends Assert {
 
     static void assertStandardJsonResponse(String jsonResponse) {
-        Response response = parseJsonResponse(jsonResponse);
+        var response = parseJsonResponse(jsonResponse);
         assertTrue("Secret length mismatch", (("".equals(response.secret)) || response.secret.matches("^[A-Z0-9]{32}$")));
         assertNotNull("Image data is null", response.dataUri);
     }
 
     static void assertSecretMatches(String secret, String jsonResponse) {
-        Response response = parseJsonResponse(jsonResponse);
+        var response = parseJsonResponse(jsonResponse);
         assertEquals(secret, response.secret);
     }
 
     private static Response parseJsonResponse(String response) {
-        Gson gson = new Gson();
-        JsonObject data = (JsonObject) gson.fromJson(response, JsonObject.class).get("data");
-        String secret = data.get("secret").getAsString();
-        String dataUri = data.get("dataUri").getAsString();
+        var gson = new Gson();
+        var data = (JsonObject) gson.fromJson(response, JsonObject.class).get("data");
+        var secret = data.get("secret").getAsString();
+        var dataUri = data.get("dataUri").getAsString();
         return new Response(secret, dataUri);
     }
 

@@ -26,7 +26,7 @@ public class TotpGetSecretIT extends TotpBaseIT {
 
     @Test
     public void testGetSecret() throws Exception {
-        String response = testWebScriptCall("/s/security/getsecret");
+        var response = testWebScriptCall("/s/security/getsecret");
         assertStandardJsonResponse(response);
     }
 
