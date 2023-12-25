@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-repository</artifactId>
-            <version>23.2.0.22</version>
+            <version>23.2.0.25</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -453,7 +453,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.11.0</version>
+                        <version>3.12.1</version>
                         <configuration>
                             <source>1.8</source>
                             <target>1.8</target>
@@ -472,7 +472,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.11.0</version>
+                        <version>3.12.1</version>
                         <configuration>
                             <release>11</release>
                         </configuration>
@@ -490,7 +490,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.11.0</version>
+                        <version>3.12.1</version>
                         <configuration>
                             <release>17</release>
                         </configuration>
