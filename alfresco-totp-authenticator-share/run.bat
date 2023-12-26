@@ -51,9 +51,6 @@ echo "Usage: %0 {build_start|start|stop|purge|tail|reload_share}"
 EXIT /B %ERRORLEVEL%
 
 :start
-    docker volume create alfresco-totp-authenticator-share-acs-volume
-    docker volume create alfresco-totp-authenticator-share-db-volume
-    docker volume create alfresco-totp-authenticator-share-ass-volume
     docker-compose -f "%COMPOSE_FILE_PATH%" up --build -d
 EXIT /B 0
 :start_share
@@ -79,7 +76,4 @@ EXIT /B 0
     docker-compose -f "%COMPOSE_FILE_PATH%" logs --tail="all"
 EXIT /B 0
 :purge
-    docker volume rm -f alfresco-totp-authenticator-share-acs-volume
-    docker volume rm -f alfresco-totp-authenticator-share-db-volume
-    docker volume rm -f alfresco-totp-authenticator-share-ass-volume
 EXIT /B 0

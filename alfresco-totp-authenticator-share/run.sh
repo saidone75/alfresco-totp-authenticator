@@ -9,9 +9,6 @@ else
 fi
 
 start() {
-    docker volume create alfresco-totp-authenticator-share-acs-volume
-    docker volume create alfresco-totp-authenticator-share-db-volume
-    docker volume create alfresco-totp-authenticator-share-ass-volume
     docker-compose -f "$COMPOSE_FILE_PATH" up --build -d
 }
 
@@ -26,9 +23,7 @@ down() {
 }
 
 purge() {
-    docker volume rm -f alfresco-totp-authenticator-share-acs-volume
-    docker volume rm -f alfresco-totp-authenticator-share-db-volume
-    docker volume rm -f alfresco-totp-authenticator-share-ass-volume
+  :
 }
 
 build() {
