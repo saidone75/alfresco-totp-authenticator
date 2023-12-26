@@ -18,14 +18,20 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
-import org.junit.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import java.util.Locale;
 
-import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.*;
+import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertSecretMatches;
+import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TotpSetSecretIT extends TotpBaseIT {
 
+    @Order(1)
     @Test
     public void testSetInvalidSecret() throws Exception {
         var response = testWebScriptCall("/s/security/setsecret?secret=123");
@@ -33,6 +39,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches("", response);
     }
 
+    @Order(2)
     @Test
     public void testSetValidSecret() throws Exception {
         var secret = "AAAAAAAAAAAAAAAABBBBBBBBBBBBBBBB";
@@ -41,6 +48,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret, response);
     }
 
+    @Order(3)
     @Test
     public void testSetValidSecret2() throws Exception {
         var secret = "aaaaaaaaAAAAAAAA0000000011111111";
@@ -49,6 +57,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }
 
+    @Order(4)
     @Test
     public void testSetValidSecret3() throws Exception {
         var secret = "aaaaaaaaAAAAAAAA0000000011111111";
@@ -58,6 +67,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }
 
+    @Order(5)
     @Test
     public void testSetEmptySecret() throws Exception {
         var response = testWebScriptCall("/s/security/setsecret");
