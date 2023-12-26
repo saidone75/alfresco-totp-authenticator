@@ -304,8 +304,6 @@
                         <configuration>
                             <outputDirectory>${project.build.directory}/extensions</outputDirectory>
                             <includeScope>runtime</includeScope>
-                            <!-- IMPORTANT: if using amp dependencies only, add <includeTypes>amp</includeTypes> -->
-                            <!-- <includeTypes>amp</includeTypes> -->
                         </configuration>
                     </execution>
                 </executions>
