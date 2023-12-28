@@ -28,7 +28,7 @@ $ mvn package
 [INFO] Scanning for projects...
 [INFO]
 [INFO] ----------< org.saidone:alfresco-totp-authenticator-platform >----------
-[INFO] Building alfresco-totp-authenticator-platform Platform/Repository JAR Module 2.1-SNAPSHOT
+[INFO] Building alfresco-totp-authenticator-platform Platform/Repository JAR Module 3.0
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 
@@ -45,8 +45,8 @@ $ mvn package
 - Stop Alfresco
 - Install the JARs by copying them to the proper module location (depending on your Content Services installation), e.g.:
 ```
-$ cp alfresco-totp-authenticator-platform-2.1-SNAPSHOT.jar /opt/alfresco/modules/platform
-$ cp alfresco-totp-authenticator-share-2.1-SNAPSHOT.jar /opt/alfresco/modules/share
+$ cp alfresco-totp-authenticator-platform-3.0.jar /opt/alfresco/modules/platform
+$ cp alfresco-totp-authenticator-share-3.0.jar /opt/alfresco/modules/share
 ```
 - Start Alfresco
 ### Configuration
