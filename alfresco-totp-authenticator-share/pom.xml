@@ -18,9 +18,9 @@
         <!-- Properties used in dependency declarations, you don't need to change these -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
-        <alfresco.platform.version>23.1.0</alfresco.platform.version>
+        <alfresco.platform.version>23.2.1</alfresco.platform.version>
         <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
-        <alfresco.share.version>23.2.0.30</alfresco.share.version>
+        <alfresco.share.version>23.3.0.12</alfresco.share.version>
         <alfresco.share.docker.version>23.1.1</alfresco.share.docker.version>
 
         <!-- Docker images -->
@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>com.github.blutorange</groupId>
                 <artifactId>closure-compiler-maven-plugin</artifactId>
-                <version>2.28.0</version>
+                <version>2.30.0</version>
                 <executions>
                     <!-- Compress the JS files under the assembly folder -->
                     <execution>
