@@ -33,13 +33,21 @@ public class TotpSetSecretIT extends TotpBaseIT {
 
     @Order(1)
     @Test
+    public void testSetEmptySecret() throws Exception {
+        var response = testWebScriptCall("/s/security/setsecret");
+        assertStandardJsonResponse(response);
+        assertSecretMatches("", response);
+    }
+
+    @Order(2)
+    @Test
     public void testSetInvalidSecret() throws Exception {
         var response = testWebScriptCall("/s/security/setsecret?secret=123");
         assertStandardJsonResponse(response);
         assertSecretMatches("", response);
     }
 
-    @Order(2)
+    @Order(3)
     @Test
     public void testSetValidSecret() throws Exception {
         var secret = "AAAAAAAAAAAAAAAABBBBBBBBBBBBBBBB";
@@ -48,7 +56,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret, response);
     }
 
-    @Order(3)
+    @Order(4)
     @Test
     public void testSetValidSecret2() throws Exception {
         var secret = "aaaaaaaaAAAAAAAA0000000011111111";
@@ -57,7 +65,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }
 
-    @Order(4)
+    @Order(5)
     @Test
     public void testSetValidSecret3() throws Exception {
         var secret = "aaaaaaaaAAAAAAAA0000000011111111";
@@ -65,14 +73,6 @@ public class TotpSetSecretIT extends TotpBaseIT {
         var response = testWebScriptCall("/s/security/setsecret?secret=" + secret + "&user=" + user);
         assertStandardJsonResponse(response);
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
-    }
-
-    @Order(5)
-    @Test
-    public void testSetEmptySecret() throws Exception {
-        var response = testWebScriptCall("/s/security/setsecret");
-        assertStandardJsonResponse(response);
-        assertSecretMatches("", response);
     }
 
 }
