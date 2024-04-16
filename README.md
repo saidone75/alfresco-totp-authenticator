@@ -2,8 +2,8 @@
 Time-based One-Time Password two factor authentication for Alfresco
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-![Java CI](https://github.com/saidone75/alfresco-totp-authenticator/workflows/Java%20CI/badge.svg)
-![CodeQL](https://github.com/saidone75/alfresco-totp-authenticator/workflows/CodeQL/badge.svg)
+![Java CI](https://github.com/saidone75/alfresco-totp-authenticator/actions/workflows/build.yml/badge.svg)
+![CodeQL](https://github.com/saidone75/alfresco-totp-authenticator/actions/workflows/codeql.yml/badge.svg)
 
 
 

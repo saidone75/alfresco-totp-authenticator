@@ -16,7 +16,7 @@ jobs:
           java-version: '17'
 
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -26,13 +26,13 @@ jobs:
         run: mvn -B -DskipTests clean package
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: alfresco-totp-authenticator-platform.jar
           path: alfresco-totp-authenticator-platform/target/*.jar
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.0.0
+        uses: actions/upload-artifact@v4.3.1
         with:
           name: alfresco-totp-authenticator-share.jar
           path: alfresco-totp-authenticator-share/target/*.jar
