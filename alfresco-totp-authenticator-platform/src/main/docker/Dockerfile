@@ -18,7 +18,7 @@ COPY dev-log4j.properties $TOMCAT_DIR/shared/classes/alfresco/extension
 COPY disable-webscript-caching-context.xml $TOMCAT_DIR/shared/classes/alfresco/extension
 
 # Copy Dockerfile to avoid an error if no license file exists
-COPY Dockerfile license/*.* $TOMCAT_DIR/webapps/alfresco/WEB-INF/classes/alfresco/extension/license/
+#COPY Dockerfile license/*.* $TOMCAT_DIR/webapps/alfresco/WEB-INF/classes/alfresco/extension/license/
 
 USER ${USERNAME}
 

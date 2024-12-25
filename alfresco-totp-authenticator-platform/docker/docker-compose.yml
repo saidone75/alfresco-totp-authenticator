@@ -51,7 +51,7 @@ services:
       - alfresco-totp-authenticator-platform-acs-volume:/usr/local/tomcat/alf_data
       - ../../../../alfresco-totp-authenticator-platform/target/classes:/usr/local/tomcat/hotswap-agent/alfresco-totp-authenticator-platform/target/classes
   postgres:
-    image: postgres:15.3-alpine3.18
+    image: ${POSTGRES_IMAGE}:${POSTGRES_VERSION}
     mem_limit: 512m
     environment:
       - POSTGRES_PASSWORD=alfresco
@@ -63,7 +63,7 @@ services:
     volumes:
       - alfresco-totp-authenticator-platform-db-volume:/var/lib/postgresql/data
   solr6:
-    image: alfresco/alfresco-search-services:2.0.9.1
+    image: ${ASS_IMAGE}:${ASS_VERSION}
     mem_limit: 1g
     environment:
       # Solr needs to know how to register itself with Alfresco
@@ -86,7 +86,7 @@ services:
       - alfresco-totp-authenticator-platform-ass-volume:/opt/alfresco-search-services/contentstore
       - alfresco-totp-authenticator-platform-ass-volume:/opt/alfresco-search-services/data
   activemq:
-    image: alfresco/alfresco-activemq:5.18-jre17-rockylinux8
+    image: ${ACTIVEMQ_IMAGE}:${ACTIVEMQ_VERSION}
     ports:
       - 8161:8161 # Web Console
       - 5672:5672 # AMQP
