@@ -26,13 +26,13 @@ jobs:
         run: mvn -B -DskipTests clean package
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: alfresco-totp-authenticator-platform.jar
           path: alfresco-totp-authenticator-platform/target/*.jar
 
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.6.0
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: alfresco-totp-authenticator-share.jar
           path: alfresco-totp-authenticator-share/target/*.jar
