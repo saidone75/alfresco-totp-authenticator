@@ -7,13 +7,13 @@ Time-based One-Time Password two factor authentication for Alfresco
 
 
 
-[![Alfresco TOTP authenticator](totp-activate.gif)](https://vimeo.com/507443676)
+[![Alfresco TOTP authenticator](totp-activate.gif?raw=true)](https://vimeo.com/507443676)
 
 Distributed for free without any warranty. Use at your own risk.
 
 Tested with **Alfresco Community Edition 23.1** (for older Alfresco see previous releases).
 
-[![Alfresco TOTP authenticator](totp-login.gif)](https://vimeo.com/507443676)
+[![Alfresco TOTP authenticator](totp-login.gif?raw=true)](https://vimeo.com/507443676)
 
 ## Instructions
 ### Build
