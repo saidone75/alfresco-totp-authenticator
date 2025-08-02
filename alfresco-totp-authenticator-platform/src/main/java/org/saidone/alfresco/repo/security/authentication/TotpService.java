@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021-2023 Saidone
+ * Copyright (C) 2021-2025 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.saidone.alfresco.repo.security.authentication;
@@ -29,6 +29,7 @@ import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.repo.security.authentication.AuthenticationException;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
@@ -64,7 +65,7 @@ public final class TotpService {
         try {
             AuthenticationUtil.runAs(
                     (AuthenticationUtil.RunAsWork<String>) () -> {
-                        var secret = (String) nodeService.getProperty(
+                        val secret = (String) nodeService.getProperty(
                                 personService.getPerson(username),
                                 totpSecretQname);
                         if (secret != null &&
@@ -90,7 +91,7 @@ public final class TotpService {
     }
 
     public static void setSecret(String user, String secret) {
-        var userNodeRef = personService.getPerson(user);
+        val userNodeRef = personService.getPerson(user);
         if (Strings.isBlank(secret)) {
             nodeService.removeProperty(userNodeRef, totpSecretQname);
         } else {
@@ -105,12 +106,12 @@ public final class TotpService {
     }
 
     public static String getDataUri(String user) {
-        var secret = getSecret(user);
+        val secret = getSecret(user);
         String dataUri;
         if (null == secret) {
             dataUri = null;
         } else {
-            var data = new QrData.Builder()
+            val data = new QrData.Builder()
                     .label(user)
                     .secret(secret)
                     .issuer(issuer)
@@ -118,7 +119,7 @@ public final class TotpService {
                     .digits(digits)
                     .period(period)
                     .build();
-            var generator = new ZxingPngQrGenerator();
+            val generator = new ZxingPngQrGenerator();
             byte[] imageData = null;
             try {
                 imageData = generator.generate(data);

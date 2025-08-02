@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021-2023 Saidone
+ * Copyright (C) 2021-2025 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,11 +13,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.val;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
     @Order(1)
     @Test
     public void testSetEmptySecret() throws Exception {
-        var response = testWebScriptCall("/s/security/setsecret");
+        val response = testWebScriptCall("/s/security/setsecret");
         assertStandardJsonResponse(response);
         assertSecretMatches("", response);
     }
@@ -42,7 +43,7 @@ public class TotpSetSecretIT extends TotpBaseIT {
     @Order(2)
     @Test
     public void testSetInvalidSecret() throws Exception {
-        var response = testWebScriptCall("/s/security/setsecret?secret=123");
+        val response = testWebScriptCall("/s/security/setsecret?secret=123");
         assertStandardJsonResponse(response);
         assertSecretMatches("", response);
     }
@@ -50,8 +51,8 @@ public class TotpSetSecretIT extends TotpBaseIT {
     @Order(3)
     @Test
     public void testSetValidSecret() throws Exception {
-        var secret = "AAAAAAAAAAAAAAAABBBBBBBBBBBBBBBB";
-        var response = testWebScriptCall("/s/security/setsecret?secret=" + secret);
+        val secret = "AAAAAAAAAAAAAAAABBBBBBBBBBBBBBBB";
+        val response = testWebScriptCall("/s/security/setsecret?secret=" + secret);
         assertStandardJsonResponse(response);
         assertSecretMatches(secret, response);
     }
@@ -59,8 +60,8 @@ public class TotpSetSecretIT extends TotpBaseIT {
     @Order(4)
     @Test
     public void testSetValidSecret2() throws Exception {
-        var secret = "aaaaaaaaAAAAAAAA0000000011111111";
-        var response = testWebScriptCall("/s/security/setsecret?secret=" + secret);
+        val secret = "aaaaaaaaAAAAAAAA0000000011111111";
+        val response = testWebScriptCall("/s/security/setsecret?secret=" + secret);
         assertStandardJsonResponse(response);
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }
@@ -68,9 +69,9 @@ public class TotpSetSecretIT extends TotpBaseIT {
     @Order(5)
     @Test
     public void testSetValidSecret3() throws Exception {
-        var secret = "aaaaaaaaAAAAAAAA0000000011111111";
-        var user = "ciao";
-        var response = testWebScriptCall("/s/security/setsecret?secret=" + secret + "&user=" + user);
+        val secret = "aaaaaaaaAAAAAAAA0000000011111111";
+        val user = "ciao";
+        val response = testWebScriptCall("/s/security/setsecret?secret=" + secret + "&user=" + user);
         assertStandardJsonResponse(response);
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }

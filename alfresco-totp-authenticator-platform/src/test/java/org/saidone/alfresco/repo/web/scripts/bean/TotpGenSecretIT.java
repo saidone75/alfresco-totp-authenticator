@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021-2023 Saidone
+ * Copyright (C) 2021-2025 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,11 +13,12 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.val;
 import org.junit.Test;
 
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
@@ -26,7 +27,7 @@ public class TotpGenSecretIT extends TotpBaseIT {
 
     @Test
     public void testGenSecret() throws Exception {
-        var response = testWebScriptCall("/s/security/gensecret");
+        val response = testWebScriptCall("/s/security/gensecret");
         assertStandardJsonResponse(response);
     }
 

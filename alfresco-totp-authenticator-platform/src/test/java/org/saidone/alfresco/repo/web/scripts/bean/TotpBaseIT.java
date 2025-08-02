@@ -1,6 +1,6 @@
 /*
  * Alfresco TOTP authenticator - two factor authentication for Alfresco
- * Copyright (C) 2021-2023 Saidone
+ * Copyright (C) 2021-2025 Saidone
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,12 +13,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
 import lombok.Cleanup;
+import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.auth.AuthScope;
@@ -37,24 +38,24 @@ public class TotpBaseIT {
     private static final String ACS_DEFAULT_ENDPOINT = "http://localhost:8080/alfresco";
 
     protected String testWebScriptCall(String url) throws Exception {
-        var webscriptUrl = String.format("%s%s", getPlatformEndpoint(), url);
+        val webscriptUrl = String.format("%s%s", getPlatformEndpoint(), url);
 
         /* Login credentials for Alfresco repo */
-        var provider = new BasicCredentialsProvider();
-        var credentials = new UsernamePasswordCredentials("admin", "admin");
+        val provider = new BasicCredentialsProvider();
+        val credentials = new UsernamePasswordCredentials("admin", "admin");
         provider.setCredentials(AuthScope.ANY, credentials);
 
         /* Create HTTP client with credentials */
-        @Cleanup var httpclient = HttpClientBuilder.create()
+        @Cleanup val httpclient = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(provider)
                 .build();
 
         /* Execute webscript call */
-        var httpget = new HttpGet(webscriptUrl);
-        var httpResponse = httpclient.execute(httpget);
+        val httpget = new HttpGet(webscriptUrl);
+        val httpResponse = httpclient.execute(httpget);
         assertEquals("Incorrect HTTP Response Status",
                 HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
-        var entity = httpResponse.getEntity();
+        val entity = httpResponse.getEntity();
         assertNotNull("Response from Web Script is null", entity);
         return EntityUtils.toString(entity);
     }
