@@ -23,8 +23,15 @@ import org.junit.Test;
 
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
 
+/**
+ * Integration test for the {@code /s/security/getsecret} Web Script.
+ */
 public class TotpGetSecretIT extends TotpBaseIT {
 
+    /**
+     * Ensures that the Web Script returns the expected JSON structure containing
+     * the secret and QR code data URI.
+     */
     @Test
     public void testGetSecret() throws Exception {
         val response = testWebScriptCall("/s/security/getsecret");

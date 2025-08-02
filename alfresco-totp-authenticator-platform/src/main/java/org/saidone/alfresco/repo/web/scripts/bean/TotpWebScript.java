@@ -29,6 +29,10 @@ import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.WebScriptException;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 
+/**
+ * Base class for TOTP related Web Scripts providing helper methods and common
+ * dependencies.
+ */
 public class TotpWebScript extends DeclarativeWebScript {
 
     @Setter
@@ -36,6 +40,14 @@ public class TotpWebScript extends DeclarativeWebScript {
     @Setter
     protected MessageService messageService;
 
+    /**
+     * Determines the target user of the web script. If no user is provided in the
+     * request, the currently authenticated user is used. Only administrators may
+     * operate on other users.
+     *
+     * @param req web script request
+     * @return user name the operation should apply to
+     */
     protected String validateUser(WebScriptRequest req) {
         var user = req.getParameter("user");
         if (Strings.isBlank(user)) {

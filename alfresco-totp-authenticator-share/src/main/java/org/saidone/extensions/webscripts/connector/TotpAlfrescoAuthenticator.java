@@ -17,6 +17,11 @@ import org.springframework.extensions.webscripts.connector.RemoteClient;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.extensions.webscripts.json.JSONWriter;
 
+/**
+ * {@link org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator}
+ * implementation that submits the TOTP token together with the username and
+ * password when performing the login handshake.
+ */
 public class TotpAlfrescoAuthenticator extends org.springframework.extensions.webscripts.connector.AlfrescoAuthenticator {
     private static final Log logger = LogFactory.getLog(TotpAlfrescoAuthenticator.class);
 
@@ -26,6 +31,16 @@ public class TotpAlfrescoAuthenticator extends org.springframework.extensions.we
 
     public final static String CS_PARAM_ALF_TICKET = "alfTicket";
 
+    /**
+     * Performs an authentication handshake including the TOTP token if present in
+     * the credentials.
+     *
+     * @param endpoint         endpoint identifier
+     * @param credentials      user credentials, possibly containing a token
+     * @param connectorSession current connector session
+     * @return the authenticated session or {@code null} if authentication fails
+     * @throws AuthenticationException if authentication is not possible
+     */
     public ConnectorSession authenticate(String endpoint, Credentials credentials, ConnectorSession connectorSession)
             throws AuthenticationException {
         ConnectorSession cs = null;
@@ -97,6 +112,11 @@ public class TotpAlfrescoAuthenticator extends org.springframework.extensions.we
         return cs;
     }
 
+    /**
+     * Returns the login URL used to authenticate against the repository.
+     *
+     * @return login URL
+     */
     protected String getLoginURL() {
         return API_LOGIN;
     }

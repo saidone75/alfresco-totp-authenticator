@@ -30,9 +30,22 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Web Script that allows administrators or users to set or clear their own TOTP
+ * secret.
+ */
 @Slf4j
 public class TotpSetSecret extends TotpWebScript {
 
+    /**
+     * Sets the supplied TOTP secret for the requested user. If the provided
+     * secret is blank, the existing secret will be cleared.
+     *
+     * @param req    current web script request
+     * @param status web script status
+     * @param cache  response cache
+     * @return model containing the updated secret and QR code URI
+     */
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
