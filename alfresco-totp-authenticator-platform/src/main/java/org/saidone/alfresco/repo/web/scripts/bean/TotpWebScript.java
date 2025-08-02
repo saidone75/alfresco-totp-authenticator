@@ -19,7 +19,6 @@
 package org.saidone.alfresco.repo.web.scripts.bean;
 
 import lombok.Setter;
-import lombok.var;
 import org.alfresco.repo.dictionary.constraint.UserNameConstraint;
 import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.repo.security.authentication.AuthenticationUtil;
