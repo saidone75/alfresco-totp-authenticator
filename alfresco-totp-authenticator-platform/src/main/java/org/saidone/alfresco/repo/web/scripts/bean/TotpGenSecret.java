@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.val;
 import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
@@ -31,9 +32,9 @@ public class TotpGenSecret extends TotpWebScript {
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
-        var model = new HashMap<String, Object>();
+        val model = new HashMap<String, Object>();
 
-        var user = validateUser(req);
+        val user = validateUser(req);
 
         TotpService.generateSecret(user);
 

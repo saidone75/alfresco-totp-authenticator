@@ -20,6 +20,7 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 
 import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.saidone.alfresco.repo.security.authentication.TotpService;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.Status;
@@ -35,11 +36,11 @@ public class TotpSetSecret extends TotpWebScript {
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
-        var model = new HashMap<String, Object>();
+        val model = new HashMap<String, Object>();
 
-        var user = validateUser(req);
+        val user = validateUser(req);
 
-        var secret = Strings.nullToEmpty(req.getParameter("secret")).toUpperCase(Locale.ROOT);
+        val secret = Strings.nullToEmpty(req.getParameter("secret")).toUpperCase(Locale.ROOT);
         if (secret.isEmpty() || secret.matches("^[A-Z0-9]{32}$")) {
             TotpService.setSecret(user, secret);
         } else {

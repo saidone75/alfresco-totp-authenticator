@@ -18,6 +18,7 @@
 
 package org.saidone.alfresco.repo.web.scripts.bean;
 
+import lombok.val;
 import org.junit.Test;
 
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
@@ -26,7 +27,7 @@ public class TotpGetSecretIT extends TotpBaseIT {
 
     @Test
     public void testGetSecret() throws Exception {
-        var response = testWebScriptCall("/s/security/getsecret");
+        val response = testWebScriptCall("/s/security/getsecret");
         assertStandardJsonResponse(response);
     }
 

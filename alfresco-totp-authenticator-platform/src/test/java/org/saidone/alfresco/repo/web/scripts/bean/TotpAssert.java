@@ -21,26 +21,27 @@ package org.saidone.alfresco.repo.web.scripts.bean;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import org.junit.Assert;
 
 public final class TotpAssert extends Assert {
 
     static void assertStandardJsonResponse(String jsonResponse) {
-        var response = parseJsonResponse(jsonResponse);
+        val response = parseJsonResponse(jsonResponse);
         assertTrue("Secret length mismatch", (("".equals(response.secret)) || response.secret.matches("^[A-Z0-9]{32}$")));
         assertNotNull("Image data is null", response.dataUri);
     }
 
     static void assertSecretMatches(String secret, String jsonResponse) {
-        var response = parseJsonResponse(jsonResponse);
+        val response = parseJsonResponse(jsonResponse);
         assertEquals(secret, response.secret);
     }
 
     private static Response parseJsonResponse(String response) {
-        var gson = new Gson();
-        var data = (JsonObject) gson.fromJson(response, JsonObject.class).get("data");
-        var secret = data.get("secret").getAsString();
-        var dataUri = data.get("dataUri").getAsString();
+        val gson = new Gson();
+        val data = (JsonObject) gson.fromJson(response, JsonObject.class).get("data");
+        val secret = data.get("secret").getAsString();
+        val dataUri = data.get("dataUri").getAsString();
         return new Response(secret, dataUri);
     }
 
