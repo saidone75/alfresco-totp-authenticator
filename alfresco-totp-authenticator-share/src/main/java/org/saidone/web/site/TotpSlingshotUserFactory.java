@@ -6,12 +6,26 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.extensions.surf.support.AlfrescoUserFactory;
 import org.springframework.extensions.webscripts.connector.*;
 
+/**
+ * Extension of Alfresco's {@link org.alfresco.web.site.SlingshotUserFactory}
+ * that adds a TOTP token to the credentials used during authentication.
+ */
 public class TotpSlingshotUserFactory extends org.alfresco.web.site.SlingshotUserFactory
 {
     public static final String CREDENTIAL_TOKEN = "token";
 
     private static final Log logger = LogFactory.getLog(AlfrescoUserFactory.class);
 
+    /**
+     * Authenticates a user against the repository using username, password and
+     * the provided TOTP token.
+     *
+     * @param request  current HTTP request
+     * @param username user name
+     * @param password user password
+     * @param token    one-time TOTP token
+     * @return {@code true} if authentication succeeds, {@code false} otherwise
+     */
     public boolean authenticate(HttpServletRequest request, String username, String password, String token)
     {
         boolean authenticated = false;

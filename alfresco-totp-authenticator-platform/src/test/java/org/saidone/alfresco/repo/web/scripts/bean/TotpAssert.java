@@ -24,19 +24,41 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import org.junit.Assert;
 
+/**
+ * Utility assertions for verifying responses from TOTP related Web Scripts.
+ */
 public final class TotpAssert extends Assert {
 
+    /**
+     * Asserts that the standard JSON response contains a valid secret and QR code
+     * data URI.
+     *
+     * @param jsonResponse JSON string returned by the Web Script
+     */
     static void assertStandardJsonResponse(String jsonResponse) {
         val response = parseJsonResponse(jsonResponse);
         assertTrue("Secret length mismatch", (("".equals(response.secret)) || response.secret.matches("^[A-Z0-9]{32}$")));
         assertNotNull("Image data is null", response.dataUri);
     }
 
+    /**
+     * Asserts that the provided secret matches the one contained in the JSON
+     * response.
+     *
+     * @param secret       expected secret value
+     * @param jsonResponse JSON string returned by the Web Script
+     */
     static void assertSecretMatches(String secret, String jsonResponse) {
         val response = parseJsonResponse(jsonResponse);
         assertEquals(secret, response.secret);
     }
 
+    /**
+     * Parses the JSON Web Script response into a {@link Response} object.
+     *
+     * @param response JSON response string
+     * @return parsed response instance
+     */
     private static Response parseJsonResponse(String response) {
         val gson = new Gson();
         val data = (JsonObject) gson.fromJson(response, JsonObject.class).get("data");

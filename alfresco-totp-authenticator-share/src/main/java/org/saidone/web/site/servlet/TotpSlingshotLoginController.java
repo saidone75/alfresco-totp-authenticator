@@ -11,6 +11,10 @@ import org.springframework.extensions.surf.mvc.AbstractLoginController;
 import org.springframework.extensions.surf.site.AuthenticationUtil;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Custom {@link org.alfresco.web.site.servlet.SlingshotLoginController} that adds
+ * support for a TOTP token during authentication.
+ */
 public class TotpSlingshotLoginController extends org.alfresco.web.site.servlet.SlingshotLoginController
 {
     protected static final String PARAM_TOKEN = "token";
@@ -18,16 +22,34 @@ public class TotpSlingshotLoginController extends org.alfresco.web.site.servlet.
     private TotpSlingshotUserFactory userFactory;
     private WebFrameworkConfigElement webFrameworkConfiguration;
 
+    /**
+     * Sets the user factory used to authenticate the user.
+     *
+     * @param userFactory factory capable of authenticating with a TOTP token
+     */
     public void setUserFactory(TotpSlingshotUserFactory userFactory)
     {
         this.userFactory = userFactory;
     }
 
+    /**
+     * Injects the web framework configuration.
+     *
+     * @param webFrameworkConfiguration Alfresco web framework configuration element
+     */
     public void setWebFrameworkConfiguration(WebFrameworkConfigElement webFrameworkConfiguration)
     {
         this.webFrameworkConfiguration = webFrameworkConfiguration;
     }
 
+    /**
+     * Handles the login request and performs TOTP based authentication.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return always {@code null} as response handling is performed via redirects
+     * @throws Exception on authentication or IO errors
+     */
     @Override
     public ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
             throws Exception

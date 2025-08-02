@@ -27,8 +27,20 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Web Script responsible for generating a new TOTP secret for a user and
+ * returning it together with the QR data URI needed for authenticator apps.
+ */
 public class TotpGenSecret extends TotpWebScript {
 
+    /**
+     * Generates a new TOTP secret for the requested user.
+     *
+     * @param req    current web script request
+     * @param status web script status
+     * @param cache  response cache
+     * @return model containing the generated secret and corresponding QR code URI
+     */
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 
