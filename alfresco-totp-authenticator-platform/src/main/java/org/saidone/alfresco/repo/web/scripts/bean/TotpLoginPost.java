@@ -39,7 +39,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Post based login script
+ * Web Script handling login requests that include a TOTP token in addition to
+ * the standard username and password.
  */
 public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost {
     // dependencies
@@ -48,8 +49,14 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost 
     @Setter
     protected EventPublisher eventPublisher;
 
-    /* (non-Javadoc)
-     * @see org.alfresco.web.scripts.DeclarativeWebScript#executeImpl(org.alfresco.web.scripts.WebScriptRequest, org.alfresco.web.scripts.WebScriptResponse)
+    /**
+     * Processes the POST request containing login credentials and delegates to
+     * {@link #login(String, String, String)} once the JSON payload has been
+     * parsed.
+     *
+     * @param req    current web script request
+     * @param status web script status
+     * @return model containing the user name and authentication ticket
      */
     @Override
     protected Map<String, Object> executeImpl(WebScriptRequest req, Status status) {
@@ -94,6 +101,15 @@ public class TotpLoginPost extends org.alfresco.repo.web.scripts.bean.LoginPost 
         }
     }
 
+    /**
+     * Performs the actual authentication using username, password and TOTP token
+     * and returns the authentication ticket.
+     *
+     * @param username user name
+     * @param password user password
+     * @param token    one-time TOTP token
+     * @return model containing the authenticated user name and ticket
+     */
     protected Map<String, Object> login(final String username, String password, String token) {
         try {
             // check totp

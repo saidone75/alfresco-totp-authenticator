@@ -23,8 +23,14 @@ import org.junit.Test;
 
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
 
+/**
+ * Integration test for the {@code /s/security/gensecret} Web Script.
+ */
 public class TotpGenSecretIT extends TotpBaseIT {
 
+    /**
+     * Ensures that generating a new secret returns a valid JSON response.
+     */
     @Test
     public void testGenSecret() throws Exception {
         val response = testWebScriptCall("/s/security/gensecret");

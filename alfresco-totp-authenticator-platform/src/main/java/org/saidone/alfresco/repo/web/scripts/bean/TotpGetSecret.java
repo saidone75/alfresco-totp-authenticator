@@ -27,8 +27,20 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Web Script returning the current TOTP secret for a user together with the QR
+ * code data URI.
+ */
 public class TotpGetSecret extends TotpWebScript {
 
+    /**
+     * Retrieves the TOTP secret and QR code for the requested user.
+     *
+     * @param req    current web script request
+     * @param status web script status
+     * @param cache  response cache
+     * @return model containing the secret and QR code URI
+     */
     protected Map<String, Object> executeImpl(
             WebScriptRequest req, Status status, Cache cache) {
 

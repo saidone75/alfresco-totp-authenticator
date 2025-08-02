@@ -29,9 +29,16 @@ import java.util.Locale;
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertSecretMatches;
 import static org.saidone.alfresco.repo.web.scripts.bean.TotpAssert.assertStandardJsonResponse;
 
+/**
+ * Integration tests for the {@code /s/security/setsecret} Web Script covering
+ * various secret values.
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TotpSetSecretIT extends TotpBaseIT {
 
+    /**
+     * Ensures that providing no secret clears any existing value.
+     */
     @Order(1)
     @Test
     public void testSetEmptySecret() throws Exception {
@@ -40,6 +47,9 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches("", response);
     }
 
+    /**
+     * Ensures that an invalid secret does not modify the stored value.
+     */
     @Order(2)
     @Test
     public void testSetInvalidSecret() throws Exception {
@@ -48,6 +58,9 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches("", response);
     }
 
+    /**
+     * Verifies that a valid secret is stored correctly.
+     */
     @Order(3)
     @Test
     public void testSetValidSecret() throws Exception {
@@ -57,6 +70,10 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret, response);
     }
 
+    /**
+     * Valid secret containing lower-case letters should be normalised to upper
+     * case.
+     */
     @Order(4)
     @Test
     public void testSetValidSecret2() throws Exception {
@@ -66,6 +83,9 @@ public class TotpSetSecretIT extends TotpBaseIT {
         assertSecretMatches(secret.toUpperCase(Locale.ROOT), response);
     }
 
+    /**
+     * Admins may set secrets for other users.
+     */
     @Order(5)
     @Test
     public void testSetValidSecret3() throws Exception {

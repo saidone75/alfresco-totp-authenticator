@@ -40,6 +40,10 @@ import org.alfresco.service.namespace.QName;
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
 
 @Slf4j
+/**
+ * Utility service providing TOTP generation, validation and QR code helpers for
+ * Alfresco users.
+ */
 public final class TotpService {
 
     @Setter
@@ -57,10 +61,20 @@ public final class TotpService {
     @Setter
     private static int period;
 
+    /**
+     * QName of the property storing the TOTP secret on the person node.
+     */
     public static final QName totpSecretQname = QName.createQName("org.saidone", "totpsecret");
 
     private TotpService() {}
 
+    /**
+     * Validates the provided token for the given user. If the token does not
+     * match the stored secret an {@link AuthenticationException} is thrown.
+     *
+     * @param username user name
+     * @param token    one-time TOTP token
+     */
     public static void authorizeToken(String username, String token) {
         try {
             AuthenticationUtil.runAs(
@@ -83,6 +97,11 @@ public final class TotpService {
         }
     }
 
+    /**
+     * Generates and stores a new TOTP secret for the given user.
+     *
+     * @param user user name
+     */
     public static void generateSecret(String user) {
         nodeService.setProperty(
                 personService.getPerson(user),
@@ -90,6 +109,12 @@ public final class TotpService {
                 new DefaultSecretGenerator().generate());
     }
 
+    /**
+     * Sets the provided TOTP secret for the user or removes it if blank.
+     *
+     * @param user   user name
+     * @param secret new secret value
+     */
     public static void setSecret(String user, String secret) {
         val userNodeRef = personService.getPerson(user);
         if (Strings.isBlank(secret)) {
@@ -99,12 +124,25 @@ public final class TotpService {
         }
     }
 
+    /**
+     * Retrieves the stored TOTP secret for the user.
+     *
+     * @param user user name
+     * @return stored secret or {@code null} if none exists
+     */
     public static String getSecret(String user) {
         return (String) nodeService.getProperty(
                 personService.getPerson(user),
                 totpSecretQname);
     }
 
+    /**
+     * Builds a data URI representing a QR code for the user's secret suitable for
+     * consumption by authenticator applications.
+     *
+     * @param user user name
+     * @return data URI string or {@code null} if no secret exists
+     */
     public static String getDataUri(String user) {
         val secret = getSecret(user);
         String dataUri;
@@ -132,6 +170,10 @@ public final class TotpService {
         return dataUri;
     }
 
+    /**
+     * Logs the start of the service. Intended to be called by the Spring
+     * container during initialization.
+     */
     public static void init() {
         log.info("Starting {}", TotpService.class.getName());
     }

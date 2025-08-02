@@ -32,11 +32,21 @@ import org.apache.http.util.EntityUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Base class providing helper methods for Web Script integration tests.
+ */
 public class TotpBaseIT {
 
     private static final String ACS_ENDPOINT_PROP = "acs.endpoint.path";
     private static final String ACS_DEFAULT_ENDPOINT = "http://localhost:8080/alfresco";
 
+    /**
+     * Executes a GET call to the given Web Script URL using basic authentication
+     * against the repository.
+     *
+     * @param url relative Web Script URL
+     * @return response body as a string
+     */
     protected String testWebScriptCall(String url) throws Exception {
         val webscriptUrl = String.format("%s%s", getPlatformEndpoint(), url);
 
@@ -60,6 +70,11 @@ public class TotpBaseIT {
         return EntityUtils.toString(entity);
     }
 
+    /**
+     * Returns the platform endpoint URL based on system properties or defaults.
+     *
+     * @return platform endpoint URL
+     */
     private String getPlatformEndpoint() {
         final String platformEndpoint = System.getProperty(ACS_ENDPOINT_PROP);
         return StringUtils.isNotBlank(platformEndpoint) ? platformEndpoint : ACS_DEFAULT_ENDPOINT;
