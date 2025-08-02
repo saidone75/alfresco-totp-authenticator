@@ -48,6 +48,7 @@ $ mvn package
 $ cp alfresco-totp-authenticator-platform-3.0.jar /opt/alfresco/modules/platform
 $ cp alfresco-totp-authenticator-share-3.0.jar /opt/alfresco/modules/share
 ```
+- Additionally, download [totp-1.7.1.jar](https://repo1.maven.org/maven2/dev/samstevens/totp/totp/1.7.1/totp-1.7.1.jar) and ensure it is on the classpath.
 - Start Alfresco
 ### Configuration
 - Log into Alfresco
