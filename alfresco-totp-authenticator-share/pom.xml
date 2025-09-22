@@ -18,7 +18,7 @@
         <!-- Properties used in dependency declarations, you don't need to change these -->
         <alfresco.groupId>org.alfresco</alfresco.groupId>
         <alfresco.bomDependencyArtifactId>acs-community-packaging</alfresco.bomDependencyArtifactId>
-        <alfresco.platform.version>25.3.0-A.5</alfresco.platform.version>
+        <alfresco.platform.version>25.3.0-A.8</alfresco.platform.version>
         <alfresco.platform.docker.user>alfresco</alfresco.platform.docker.user>
         <alfresco.share.version>25.3.0.19</alfresco.share.version>
         <alfresco.share.docker.version>25.1.0-A.5</alfresco.share.docker.version>
