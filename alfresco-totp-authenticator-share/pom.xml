@@ -201,7 +201,7 @@
             <plugin>
                 <groupId>com.github.blutorange</groupId>
                 <artifactId>closure-compiler-maven-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.0</version>
                 <executions>
                     <!-- Compress the JS files under the assembly folder -->
                     <execution>
