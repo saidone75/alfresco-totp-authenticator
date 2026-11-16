@@ -83,10 +83,10 @@
             <version>${alfresco.sdk.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- Keep the repository aligned with the platform BOM and remote API. -->
         <dependency>
             <groupId>org.alfresco</groupId>
             <artifactId>alfresco-repository</artifactId>
-            <version>26.3.0.108</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
