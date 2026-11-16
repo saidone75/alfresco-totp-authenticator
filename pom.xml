@@ -4,12 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.saidone</groupId>
 	<artifactId>alfresco-totp-authenticator</artifactId>
-	<version>${project.version}</version>
+	<version>3.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
-		<project.version>3.1-SNAPSHOT</project.version>
 	</properties>
 	<modules>
 		<module>alfresco-totp-authenticator-platform</module>
